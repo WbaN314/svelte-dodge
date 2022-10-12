@@ -9,6 +9,7 @@
 
   <div class="cell">
     <Dodge debug>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         class="test"
         style={`
@@ -35,6 +36,7 @@
 
   <div class="cell">
     <Dodge debug>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         class="test"
         style={`

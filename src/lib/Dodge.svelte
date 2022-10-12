@@ -85,6 +85,7 @@
     bind:this={areaBind}
     on:pointermove={(e) => limitedUpdateCursorPosition(e)}
   >
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div
       style={`
         background-color: ${debug ? "rgb(0,128,0,0.2)" : "inherit"};
