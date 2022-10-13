@@ -108,8 +108,8 @@
 		>
 			<div
 				style={`
-        width: ${element.w}px;
-        height: ${element.h}px;
+        ${element.w ? `width: ${element.w}px` : ``};
+        ${element.h ? `height: ${element.h}px` : ``};
         display: grid;
         justify-content: stretch;
         align-items: stretch;
