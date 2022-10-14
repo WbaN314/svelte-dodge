@@ -11,13 +11,13 @@ Make components dodge the pointer.
 
 | Prop | Values (default)|Description|
 |-----|---------------|--------------|
-|activationDistance|number (20)|Activation distance in pixels.|
+|activationDistance|number (20)|Activation distance in px.|
 |box|Object (100 each)|Size of possible movement area (additional to element size) in px in the directions up, down, left and right.|
 |debug|boolean (false)|Show activation and movement area for debugging.|
 |dodge|boolean (true)|Toggle the movement.|
-|duration|number (0.1)|Transition duration when movement is triggered.|
+|duration|number (0.1)|Transition duration in s when movement is triggered.|
 |mode|string ('random-away')|See movement.|
-|rate|number (10)|Update rate on cursor position and movement trigger detection.|
+|rate|number (10)|Update rate on cursor position and movement trigger detection in ms.|
 
 ## Movement
 
