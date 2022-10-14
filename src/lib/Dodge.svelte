@@ -1,17 +1,16 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import {
 		randomMove,
 		randomMoveAway,
 		rateLimit,
 		type Box,
-		type Point,
 		type Element,
-		type Square,
 		type Cursor
 	} from './utils.js';
 
-	export let mode: 'random' | 'random-away' = 'random-away';
+	type Mode = 'random' | 'random-away'
+
+	export let mode: Mode = 'random-away';
 	export let dodge = true;
 	export let debug = false;
 	export let box: Box = { up: 100, right: 100, down: 100, left: 100 };
@@ -21,8 +20,8 @@
 
 	let transitioning = false;
 
-  let dummyW: number;
-  let dummyH: number;
+	let dummyW: number;
+	let dummyH: number;
 
 	let element: Element;
 	let elementW: number;
@@ -36,9 +35,13 @@
 		h: Math.max(elementH, dummyH)
 	};
 
-	let cursor: Cursor = {
+	let cursor: Cursor;
+	$: cursor = {
 		x: undefined,
-		y: undefined
+		y: undefined,
+		previousX: undefined,
+		previousY: undefined,
+		rate: rate
 	};
 
 	function handleMove() {
@@ -57,8 +60,10 @@
 	$: areaW = box.left + element.w + box.right;
 	$: areaH = box.down + element.h + box.up;
 
-	let areaBind;
+	let areaBind: HTMLElement;
 	function updateCursorPosition(e: PointerEvent) {
+		cursor.previousX = cursor.x
+		cursor.previousY = cursor.y
 		cursor.x = e.x - areaBind.getBoundingClientRect().x;
 		cursor.y = e.y - areaBind.getBoundingClientRect().y;
 	}

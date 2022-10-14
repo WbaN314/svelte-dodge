@@ -21,7 +21,13 @@ export interface Element extends Square {
   a: number;
 }
 
-export interface Cursor extends Point {}
+export interface Cursor {
+  x: number | undefined;
+  y: number | undefined;
+  previousX: number | undefined;
+  previousY: number | undefined;
+  rate: number;
+}
 
 export function rateLimit(f: Function, rate: number) {
   let limited = false;
