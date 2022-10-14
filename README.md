@@ -7,17 +7,37 @@ Make components dodge the pointer.
 - Written in Svelte with Typescript
 - No external 3rd party dependencies
 
+## Installation
+
+```
+npm i -D svelte-dodge
+```
+
+## Usage
+
+```svelte
+<script>
+  import { Dodge } from 'svelte-dodge'; 
+</script>
+
+<Dodge>
+  <div>
+    This dodges now
+  </div>
+</Dodge>
+```
+
 ## Props
 
-| Prop | Values (default)|Description|
+| Prop | Default |Description|
 |-----|---------------|--------------|
-|activationDistance|number (20)|Activation distance in px.|
-|box|Object (100 each)|Size of possible movement area (additional to element size) in px in the directions up, down, left and right.|
-|debug|boolean (false)|Show activation and movement area for debugging.|
-|dodge|boolean (true)|Toggle the movement.|
-|duration|number (0.1)|Transition duration in s when movement is triggered.|
-|mode|string ('random-away')|See movement.|
-|rate|number (10)|Update rate on cursor position and movement trigger detection in ms.|
+|activationDistance|20|Activation distance in px.|
+|box|100 each|Size of possible movement area (additional to element size) in px in the directions up, down, left and right.|
+|debug|false|Show activation and movement area for debugging.|
+|dodge|true|Toggle the movement.|
+|duration|0.1|Transition duration in s when movement is triggered.|
+|mode|'random-away'|See movement.|
+|rate|10|Update rate on cursor position and movement trigger detection in ms.|
 
 ## Movement
 
@@ -26,6 +46,6 @@ Movement is triggered whenever the cursor moves inside the activation area. It i
 | Value |Description|
 |-----|--------------|
 |'random'|Move to random spot im movement area when triggered.|
-|'random-away'|Move to random spot im movement area where the cursor will be outside of element when triggered.|
+|'random-away'|Move to random spot im movement area when triggered. Make sure the cursor is not inside element after moving.|
 
 
