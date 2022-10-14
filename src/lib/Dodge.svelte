@@ -5,10 +5,11 @@
 		rateLimit,
 		type Box,
 		type Element,
-		type Cursor
+		type Cursor,
+		inside
 	} from './utils.js';
 
-	type Mode = 'random' | 'random-away'
+	type Mode = 'random' | 'random-away';
 
 	export let mode: Mode = 'random-away';
 	export let dodge = true;
@@ -62,8 +63,8 @@
 
 	let areaBind: HTMLElement;
 	function updateCursorPosition(e: PointerEvent) {
-		cursor.previousX = cursor.x
-		cursor.previousY = cursor.y
+		cursor.previousX = cursor.x;
+		cursor.previousY = cursor.y;
 		cursor.x = e.x - areaBind.getBoundingClientRect().x;
 		cursor.y = e.y - areaBind.getBoundingClientRect().y;
 	}
@@ -107,7 +108,12 @@
         transition: ${duration}s
         `}
 			on:transitionstart|self={() => (transitioning = true)}
-			on:transitionend|self={() => (transitioning = false)}
+			on:transitionend|self={() => {
+				transitioning = false;
+        if(cursor.x && cursor.y && inside(cursor, element)){
+          handleMove()
+        }
+			}}
 			on:pointermove={limitedHandleMove}
 			on:click={limitedHandleMove}
 		>
