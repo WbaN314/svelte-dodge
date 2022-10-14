@@ -1,38 +1,31 @@
-# create-svelte
+# Svelte-Dodge
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+Make components dodge the pointer.
 
-## Creating a project
+## About
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Written in svelte with typescript
+- No external 3rd party dependencies
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Props
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+| Prop | Values (default)|Description|
+|-----|---------------|--------------|
+|activationDistance|number (20)|Activation distance in pixels.|
+|box|Object (100 each)|Size of possible movement area (additional to element size) in px in the directions up, down, left and right.|
+|debug|boolean (false)|Show activation and movement area for debugging.|
+|dodge|boolean (true)|Toggle the movement.|
+|duration|number (0.1)|Transition duration when movement is triggered.|
+|mode|string ('random-away')|See movement.|
+|rate|number (10)|Update rate on cursor position and movement trigger detection.|
 
-## Developing
+## Movement
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Movement is triggered whenever the cursor moves inside the activation area. It is also triggered when a click happens in the activation area. Movement can be disabled with the 'dodge' flag.
 
-```bash
-npm run dev
+| Value |Description|
+|-----|--------------|
+|'random'|Move to random spot im movement area when triggered.|
+|'random-away'|Move to random spot im movement area where the cursor will be outside of element when triggered.|
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
