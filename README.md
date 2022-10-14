@@ -4,7 +4,7 @@ Make components dodge the pointer.
 
 ## About
 
-- Written in svelte with typescript
+- Written in Svelte with Typescript
 - No external 3rd party dependencies
 
 ## Props
