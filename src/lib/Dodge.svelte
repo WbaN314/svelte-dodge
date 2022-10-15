@@ -6,17 +6,18 @@
 		type Box,
 		type Element,
 		type Cursor,
-		inside
+		inside,
+		kite
 	} from './utils.js';
 
-	type Mode = 'random' | 'random-away';
+	type Mode = 'random' | 'random-away' | 'kite';
 
 	export let mode: Mode = 'random-away';
 	export let dodge = true;
 	export let debug = false;
 	export let box: Box = { up: 100, right: 100, down: 100, left: 100 };
 	export let activationDistance = 20;
-	export let duration = 0.1;
+	export let duration = 0.01;
 	export let rate = 10;
 
 	let transitioning = false;
@@ -38,11 +39,8 @@
 
 	let cursor: Cursor;
 	$: cursor = {
-		x: undefined,
-		y: undefined,
-		previousX: undefined,
-		previousY: undefined,
-		rate: rate
+		x: 0,
+		y: 0,
 	};
 
 	function handleMove() {
@@ -54,6 +52,9 @@
 				case 'random-away':
 					element = { ...element, ...randomMoveAway(box, element, cursor) };
 					break;
+				case 'kite':
+					element = { ...element, ...kite(box, element, cursor) };
+					break;
 			}
 		}
 	}
@@ -63,8 +64,6 @@
 
 	let areaBind: HTMLElement;
 	function updateCursorPosition(e: PointerEvent) {
-		cursor.previousX = cursor.x;
-		cursor.previousY = cursor.y;
 		cursor.x = e.x - areaBind.getBoundingClientRect().x;
 		cursor.y = e.y - areaBind.getBoundingClientRect().y;
 	}
@@ -110,9 +109,9 @@
 			on:transitionstart|self={() => (transitioning = true)}
 			on:transitionend|self={() => {
 				transitioning = false;
-        if(cursor.x && cursor.y && inside(cursor, element)){
-          handleMove()
-        }
+				if (inside(cursor, element)) {
+					handleMove();
+				}
 			}}
 			on:pointermove={limitedHandleMove}
 			on:click={limitedHandleMove}

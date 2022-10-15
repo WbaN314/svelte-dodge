@@ -58,7 +58,7 @@
   </div>
 
   <div class="cell">
-    <Dodge debug box={{ up: 0, right: 140, left: 140, down: 0 }} mode={"random-away"}>
+    <Dodge debug box={{ up: 100, right: 140, left: 140, down: 100 }} mode={"kite"}>
       <div class="test" />
     </Dodge>
   </div>

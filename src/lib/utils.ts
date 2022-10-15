@@ -1,85 +1,96 @@
 export interface Point {
-  x: number;
-  y: number;
+	x: number;
+	y: number;
 }
 
 export interface Square {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
+	x: number;
+	y: number;
+	w: number;
+	h: number;
 }
 
 export interface Box {
-  up: number;
-  right: number;
-  down: number;
-  left: number;
+	up: number;
+	right: number;
+	down: number;
+	left: number;
 }
 
 export interface Element extends Square {
-  a: number;
+	a: number;
 }
 
 export interface Cursor {
-  x: number | undefined;
-  y: number | undefined;
-  previousX: number | undefined;
-  previousY: number | undefined;
-  rate: number;
+	x: number;
+	y: number;
 }
 
 export function rateLimit(f: Function, rate: number) {
-  let limited = false;
-  function limitedFunction(...args: any[]) {
-    if (!limited) {
-      limited = true;
-      setTimeout(() => (limited = false), rate);
-      return f(...args);
-    }
+  if (rate === 0) {
+    return f
   }
-  return limitedFunction;
+	let limited = false;
+	function limitedFunction(...args: any[]) {
+		if (!limited) {
+			limited = true;
+			setTimeout(() => (limited = false), rate);
+			return f(...args);
+		}
+	}
+	return limitedFunction;
 }
 
 export function dist(a: Point, b: Point) {
-  return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+	return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
 }
 
 export function inside(a: Point, b: Square) {
-  let xIn = a.x >= b.x && a.x <= b.x + b.w;
-  let yIn = a.y >= b.y && a.y <= b.y + b.h;
-  if (xIn && yIn) {
-    return true;
-  }
-  return false;
+	let xIn = a.x >= b.x && a.x <= b.x + b.w;
+	let yIn = a.y >= b.y && a.y <= b.y + b.h;
+	if (xIn && yIn) {
+		return true;
+	}
+	return false;
 }
 
 export function randomMove(box: Box, element: Element): Point {
-  let x = Math.round(Math.random() * (box.left + box.right)) - element.a;
-  let y = Math.round(Math.random() * (box.down + box.up)) - element.a;
+	let x = Math.round(Math.random() * (box.left + box.right));
+	let y = Math.round(Math.random() * (box.down + box.up));
+	return { x: x - element.a, y: y - element.a };
+}
+
+export function randomMoveAway(box: Box, element: Element, cursor: Cursor): Point {
+	let x = element.x + element.a;
+	let y = element.y + element.a;
+	if (box.left + box.right > 0) {
+		x = Math.round(
+			(Math.random() * (box.left + box.right - element.w) + cursor.x) % (box.left + box.right)
+		);
+	}
+	if (box.up + box.down > 0) {
+		y = Math.round(
+			(Math.random() * (box.up + box.down - element.h) + cursor.y) % (box.up + box.down)
+		);
+	}
+	return { x: x - element.a, y: y - element.a };
+}
+
+function midpoint(element: Element) {
+  let x = element.x + element.w / 2;
+	let y = element.y + element.h / 2;
   return { x, y };
 }
 
-export function randomMoveAway(
-  box: Box,
-  element: Element,
-  cursor: Cursor
-): Point {
-  let x = element.x;
-  let y = element.y;
+export function kite(box: Box, element: Element, cursor: Cursor) {
+	let x = element.x + element.a;
+	let y = element.y + element.a;
+  let m = midpoint(element);
   if (box.left + box.right > 0) {
-    x =
-      Math.round(
-        (Math.random() * (box.left + box.right - element.w) + cursor.x) %
-          (box.left + box.right)
-      ) - element.a;
+    x = Math.abs((element.x - (cursor.x - m.x)) % (box.left + box.right))
   }
   if (box.up + box.down > 0) {
-    y =
-      Math.round(
-        (Math.random() * (box.up + box.down - element.h) + cursor.y) %
-          (box.up + box.down)
-      ) - element.a;
+    y = Math.abs((element.y - (cursor.y - m.y)) % (box.up + box.down))
   }
-  return { x, y };
+	return { x: x - element.a, y: y - element.a };
 }
