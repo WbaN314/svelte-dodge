@@ -8,6 +8,7 @@ import {
   type Box,
   type Element,
   kite,
+  touchPoint,
 } from "../lib/utils.js";
 
 describe("Utils", () => {
@@ -46,7 +47,7 @@ describe("Utils", () => {
     let box: Box = { up: 100, right: 200, left: 300, down: 400 };
     let element: Element = { a: 10, x: 0, y: 0, w: 100, h: 100 };
 
-    let cursor: Cursor = { x: 0, y: 0, previousX: 0, previousY: 0, rate: 10};
+    let cursor: Cursor = { x: 0, y: 0};
     for (let i = 0; i < 100; i++) {
       let { x, y } = randomMoveAway(box, element, cursor);
       expect(x).toBeGreaterThanOrEqual(element.x - element.a);
@@ -127,18 +128,36 @@ describe("Utils", () => {
     let x = 0;
     let y = 0;
     let rate = 10;
-    let cursor: Cursor = {x, y, previousX, previousY, rate};
+    let cursor: Cursor = {x, y};
     for (let i = 0; i < 100; i++) {
       previousX = cursor.x
       previousY = cursor.y
       x = Math.round(Math.random() * (box.left + box.right + element.w));
       y = Math.round(Math.random() * (box.left + box.right + element.w));
-      cursor = {...cursor, x, y, previousX, previousY};
+      cursor = {...cursor, x, y};
       let { x: newX, y: newY } = kite(box, element, cursor);
       expect(newX).toBeGreaterThanOrEqual(-element.a);
       expect(newX).toBeLessThanOrEqual(box.left + box.right - element.a);
       expect(newY).toBeGreaterThanOrEqual(-element.a);
       expect(newY).toBeLessThanOrEqual(box.up + box.down - element.a);
     }
+  });
+
+  test("touchPoint", () => {
+    let element: Element = {
+      x: 0,
+      y: 0,
+      w: 100,
+      h: 100,
+      a: 10
+    }
+    let cursor = {x: 0, y: 0}
+    expect(touchPoint(element, cursor)).toEqual('tl')
+    cursor = {...cursor, x: 120, y: 0}
+    expect(touchPoint(element, cursor)).toEqual('tr')
+    cursor = {...cursor, x: 0, y: 120}
+    expect(touchPoint(element, cursor)).toEqual('bl')
+    cursor = {...cursor, x: 120, y: 120}
+    expect(touchPoint(element, cursor)).toEqual('br')
   });
 });

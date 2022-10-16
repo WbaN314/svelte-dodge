@@ -7,10 +7,11 @@
 		type Element,
 		type Cursor,
 		inside,
-		kite
+		kite,
+		kiteWithCorners
 	} from './utils.js';
 
-	type Mode = 'random' | 'random-away' | 'kite';
+	type Mode = 'random' | 'random-away' | 'kite' | 'kite-with-corners';
 
 	export let mode: Mode = 'random-away';
 	export let dodge = true;
@@ -55,6 +56,8 @@
 				case 'kite':
 					element = { ...element, ...kite(box, element, cursor) };
 					break;
+				case 'kite-with-corners':
+					element = { ...element, ...kiteWithCorners(box, element, cursor) };
 			}
 		}
 	}
@@ -113,8 +116,8 @@
 					handleMove();
 				}
 			}}
-			on:pointermove={limitedHandleMove}
-			on:click={limitedHandleMove}
+			on:pointermove={() => limitedHandleMove()}
+			on:click={() => limitedHandleMove()}
 		>
 			<div
 				style={`
