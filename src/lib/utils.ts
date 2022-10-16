@@ -26,10 +26,14 @@ export interface Cursor {
 	y: number;
 }
 
+function mod(n, m) {
+	return ((n % m) + m) % m;
+}
+
 export function rateLimit(f: Function, rate: number) {
-  if (rate === 0) {
-    return f
-  }
+	if (rate === 0) {
+		return f;
+	}
 	let limited = false;
 	function limitedFunction(...args: any[]) {
 		if (!limited) {
@@ -64,33 +68,47 @@ export function randomMoveAway(box: Box, element: Element, cursor: Cursor): Poin
 	let x = element.x + element.a;
 	let y = element.y + element.a;
 	if (box.left + box.right > 0) {
-		x = Math.round(
-			(Math.random() * (box.left + box.right - element.w) + cursor.x) % (box.left + box.right)
+		x = mod(
+			Math.round(Math.random() * (box.left + box.right - element.w) + cursor.x),
+			box.left + box.right
 		);
 	}
 	if (box.up + box.down > 0) {
-		y = Math.round(
-			(Math.random() * (box.up + box.down - element.h) + cursor.y) % (box.up + box.down)
+		y = mod(
+			Math.round(Math.random() * (box.up + box.down - element.h) + cursor.y),
+			box.up + box.down
 		);
 	}
 	return { x: x - element.a, y: y - element.a };
 }
 
 function midpoint(element: Element) {
-  let x = element.x + element.w / 2;
+	let x = element.x + element.w / 2;
 	let y = element.y + element.h / 2;
-  return { x, y };
+	return { x, y };
 }
 
 export function kite(box: Box, element: Element, cursor: Cursor) {
 	let x = element.x + element.a;
 	let y = element.y + element.a;
-  let m = midpoint(element);
-  if (box.left + box.right > 0) {
-    x = Math.abs((element.x - (cursor.x - m.x)) % (box.left + box.right))
-  }
-  if (box.up + box.down > 0) {
-    y = Math.abs((element.y - (cursor.y - m.y)) % (box.up + box.down))
-  }
+	let m = midpoint(element);
+	if (box.left + box.right > 0) {
+		if (cursor.y >= element.y + element.a && cursor.y <= element.y + element.h + element.a) {
+			if (cursor.x >= m.x) {
+				x = mod(cursor.x - element.w - element.a, box.left + box.right);
+			} else {
+				x = mod(cursor.x + element.a, box.left + box.right);
+			}
+		}
+	}
+	if (box.up + box.down > 0) {
+		if (cursor.x >= element.x + element.a && cursor.x <= element.x + element.w + element.a) {
+			if (cursor.y >= m.y) {
+				y = mod(cursor.y - element.h - element.a, box.up + box.down);
+			} else {
+				y = mod(cursor.y + element.a, box.up + box.down);
+			}
+		}
+	}
 	return { x: x - element.a, y: y - element.a };
 }

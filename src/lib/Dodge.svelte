@@ -17,8 +17,8 @@
 	export let debug = false;
 	export let box: Box = { up: 100, right: 100, down: 100, left: 100 };
 	export let activationDistance = 20;
-	export let duration = 0.01;
-	export let rate = 10;
+	export let duration = 0;
+	export let rate = 0;
 
 	let transitioning = false;
 
@@ -104,7 +104,7 @@
         position: absolute;
         left: ${element.x}px;
         top: ${element.y}px;
-        transition: ${duration}s
+        ${duration > 0 ? `transition: ${duration}s` : ``}
         `}
 			on:transitionstart|self={() => (transitioning = true)}
 			on:transitionend|self={() => {
