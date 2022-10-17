@@ -9,6 +9,8 @@ import {
   type Element,
   kite,
   touchPoint,
+  triangleArea,
+  inTriangle,
 } from "../lib/utils.js";
 
 describe("Utils", () => {
@@ -159,5 +161,48 @@ describe("Utils", () => {
     expect(touchPoint(element, cursor)).toEqual('bl')
     cursor = {...cursor, x: 120, y: 120}
     expect(touchPoint(element, cursor)).toEqual('br')
+    cursor = {...cursor, x: 10, y: 0}
+    expect(touchPoint(element, cursor)).toEqual('t')
+    cursor = {...cursor, x: 110, y: 0}
+    expect(touchPoint(element, cursor)).toEqual('t')
+    cursor = {...cursor, x: 110, y: 120}
+    expect(touchPoint(element, cursor)).toEqual('b')
+    cursor = {...cursor, x: 10, y: 120}
+    expect(touchPoint(element, cursor)).toEqual('b')
+    cursor = {...cursor, x: 0, y: 10}
+    expect(touchPoint(element, cursor)).toEqual('l')
+    cursor = {...cursor, x: 0, y: 110}
+    expect(touchPoint(element, cursor)).toEqual('l')
+    cursor = {...cursor, x: 120, y: 110}
+    expect(touchPoint(element, cursor)).toEqual('r')
+    cursor = {...cursor, x: 120, y: 10}
+    expect(touchPoint(element, cursor)).toEqual('r')
+    cursor = {...cursor, x: 60, y: 30}
+    expect(touchPoint(element, cursor)).toEqual('mt')
+    cursor = {...cursor, x: 90, y: 60}
+    expect(touchPoint(element, cursor)).toEqual('mr')
+    cursor = {...cursor, x: 60, y: 90}
+    expect(touchPoint(element, cursor)).toEqual('mb')
+    cursor = {...cursor, x: 30, y: 60}
+    expect(touchPoint(element, cursor)).toEqual('ml')
+  });
+
+  test('inTriangle', () => {
+    let a = {x: 0, y: 0};
+    let b = {x: 1, y: 0};
+    let c = {x: 0, y: 1};
+    let p = {x: 0.5, y: 0.5};
+    expect(inTriangle(p, a, b, c)).toEqual(true)
+  });
+
+  test('triangleArea', () => {
+    let a = {x: 0, y: 0};
+    let b = {x: 1, y: 0};
+    let c = {x: 0, y: 1};
+    expect(triangleArea(a, b, c)).toEqual(0.5);
+    a = {x: 0, y: 0};
+    b = {x: 2, y: 0};
+    c = {x: 0, y: 2};
+    expect(triangleArea(a, b, c)).toEqual(2);
   });
 });

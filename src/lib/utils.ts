@@ -114,6 +114,7 @@ export function kite(box: Box, element: Element, cursor: Cursor) {
 }
 
 export function kiteWithCorners(box: Box, element: Element, cursor: Cursor) {
+	console.log(touchPoint(element, cursor))
 	let x = element.x + element.a;
 	let y = element.y + element.a;
 	let m = midpoint(element);
@@ -161,7 +162,6 @@ export function touchPoint(element: Element, cursor: Cursor) {
 		cursor.y <= element.y + element.h + 2 * element.a
 	) {
 		position = 'bl';
-	
 	} else if (
 		cursor.x > element.x + element.w + element.a &&
 		cursor.x <= element.x + element.w + 2 * element.a &&
@@ -169,8 +169,83 @@ export function touchPoint(element: Element, cursor: Cursor) {
 		cursor.y <= element.y + element.h + 2 * element.a
 	) {
 		position = 'br';
+	} else if (
+		cursor.x >= element.x + element.a &&
+		cursor.x <= element.x + element.w + element.a &&
+		cursor.y >= element.y &&
+		cursor.y < element.y + element.a
+	) {
+		position = 't';
+	} else if (
+		cursor.x >= element.x + element.a &&
+		cursor.x <= element.x + element.w + element.a &&
+		cursor.y > element.y + element.h + element.a &&
+		cursor.y <= element.y + element.h + 2 * element.a
+	) {
+		position = 'b';
+	} else if (
+		cursor.x >= element.x &&
+		cursor.x < element.x + element.a &&
+		cursor.y >= element.y + element.a &&
+		cursor.y <= element.y + element.h + 2 * element.a
+	) {
+		position = 'l';
+	} else if (
+		cursor.x > element.x + element.w + element.a &&
+		cursor.x <= element.x + element.w + 2 * element.a &&
+		cursor.y >= element.y + element.a &&
+		cursor.y <= element.y + element.h + 2 * element.a
+	) {
+		position = 'r';
+	} else if (
+		inTriangle(
+			cursor,
+			{x: element.x + element.a ,y: element.y + element.a},
+			{x: element.x + element.a + element.w ,y: element.y + element.a},
+			{x: element.x + element.a + element.w / 2 ,y: element.y + element.a + element.h / 2}
+		)
+	) {
+		position = 'mt';
+	} else if (
+		inTriangle(
+			cursor,
+			{x: element.x + element.a + element.w , y: element.y + element.a},
+			{x: element.x + element.a + element.w , y: element.y + element.h + element.a},
+			{x: element.x + element.a + element.w / 2 , y: element.y + element.a + element.h / 2}
+		)
+	) {
+		position = 'mr';
+	} else if (
+		inTriangle(
+			cursor,
+			{x: element.x + element.a, y: element.y + element.a + element.h},
+			{x: element.x + element.a + element.w , y: element.y + element.h + element.a},
+			{x: element.x + element.a + element.w / 2 , y: element.y + element.a + element.h / 2}
+		)
+	) {
+		position = 'mb';
+	} else if (
+		inTriangle(
+			cursor,
+			{x: element.x + element.a, y: element.y + element.a},
+			{x: element.x + element.a , y: element.y + element.h + element.a},
+			{x: element.x + element.a + element.w / 2 , y: element.y + element.a + element.h / 2}
+		)
+	) {
+		position = 'ml';
 	}
 
+	return position;
+}
 
-	return position
+export function triangleArea(a: Point, b: Point, c: Point) {
+	return Math.abs((a.x * (b.y - c.y) + b.x * (c.y - a.y) + c.x * (a.y - b.y)) / 2.0);
+}
+
+export function inTriangle(point: Point, a: Point, b: Point, c: Point) {
+	let A = triangleArea(a, b, c);
+	let A1 = triangleArea(point, b, c);
+	let A2 = triangleArea(a, point, c);
+	let A3 = triangleArea(a, b, point);
+	return A == A1 + A2 + A3;
 }
