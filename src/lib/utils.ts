@@ -103,6 +103,40 @@ export function kite(box: Box, element: Element, cursor: Cursor) {
 	return { x: x - element.a, y: y - element.a };
 }
 
+export function kiteFlip(box: Box, element: Element, cursor: Cursor) {
+	let x = element.x + element.a;
+	let y = element.y + element.a;
+	let m = midpoint(element);
+	let tp = touchPoint(element, cursor);
+	if (box.left + box.right > 0) {
+		if (tp === 'l' || tp === 'ml' || tp === 'bl' || tp === 'tl') {
+			x = cursor.x + element.a
+			if (x > box.left + box.right) {
+				x = cursor.x - element.w - element.a
+			}
+		} else if (tp === 'r' || tp === 'mr' || tp === 'br' || tp === 'tr') {
+			x = cursor.x - element.w - element.a;
+			if (x < 0) {
+				x = cursor.x + element.a;
+			}
+		}
+	}
+	if (box.up + box.down > 0) {
+		if (tp === 't' || tp === 'mt' || tp === 'tl' || tp === 'tr') {
+			y = cursor.y + element.a
+			if (y > box.up + box.down) {
+				y = cursor.y - element.h - element.a
+			}
+		} else if (tp === 'b' || tp === 'mb' || tp === 'bl' || tp === 'br') {
+			y = cursor.y - element.h - element.a;
+			if (y < 0) {
+				y = cursor.y + element.a;
+			}
+		}
+	}
+	return { x: x - element.a, y: y - element.a };
+}
+
 export function touchPoint(element: Element, cursor: Cursor) {
 	let position;
 	if (

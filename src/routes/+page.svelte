@@ -8,7 +8,7 @@
 <div class="container">
 
   <div class="cell">
-    <Dodge debug mode="kite-with-corners">
+    <Dodge debug mode="kite-flip">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         class="test"

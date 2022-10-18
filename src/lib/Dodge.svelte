@@ -7,6 +7,7 @@
 		type Cursor,
 		inside,
 		kite,
+		kiteFlip,
 	} from './utils.js';
 
 	type Mode = 'random' | 'kite' | 'kite-flip';
@@ -46,16 +47,13 @@
 		if (dodge && !transitioning) {
 			switch (mode) {
 				case 'random':
-					element = { ...element, ...randomMove(box, element) };
-					break;
-				case 'random-away':
-					element = { ...element, ...randomMoveAway(box, element, cursor) };
+					element = { ...element, ...randomMove(box, element, cursor) };
 					break;
 				case 'kite':
 					element = { ...element, ...kite(box, element, cursor) };
 					break;
-				case 'kite-with-corners':
-					element = { ...element, ...kiteWithCorners(box, element, cursor) };
+				case 'kite-flip':
+					element = { ...element, ...kiteFlip(box, element, cursor) };
 			}
 		}
 	}
