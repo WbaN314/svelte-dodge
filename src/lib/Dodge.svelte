@@ -1,19 +1,17 @@
 <script lang="ts">
 	import {
 		randomMove,
-		randomMoveAway,
 		rateLimit,
 		type Box,
 		type Element,
 		type Cursor,
 		inside,
 		kite,
-		kiteWithCorners
 	} from './utils.js';
 
-	type Mode = 'random' | 'random-away' | 'kite' | 'kite-with-corners';
+	type Mode = 'random' | 'kite' | 'kite-flip';
 
-	export let mode: Mode = 'random-away';
+	export let mode: Mode = 'random';
 	export let dodge = true;
 	export let debug = false;
 	export let box: Box = { up: 100, right: 100, down: 100, left: 100 };

@@ -58,13 +58,7 @@ export function inside(a: Point, b: Square) {
 	return false;
 }
 
-export function randomMove(box: Box, element: Element): Point {
-	let x = Math.round(Math.random() * (box.left + box.right));
-	let y = Math.round(Math.random() * (box.down + box.up));
-	return { x: x - element.a, y: y - element.a };
-}
-
-export function randomMoveAway(box: Box, element: Element, cursor: Cursor): Point {
+export function randomMove(box: Box, element: Element, cursor: Cursor): Point {
 	let x = element.x + element.a;
 	let y = element.y + element.a;
 	if (box.left + box.right > 0) {
@@ -92,48 +86,18 @@ export function kite(box: Box, element: Element, cursor: Cursor) {
 	let x = element.x + element.a;
 	let y = element.y + element.a;
 	let m = midpoint(element);
+	let tp = touchPoint(element, cursor);
 	if (box.left + box.right > 0) {
-		if (cursor.y >= element.y + element.a && cursor.y <= element.y + element.h + element.a) {
-			if (cursor.x >= m.x) {
-				x = mod(cursor.x - element.w - element.a, box.left + box.right);
-			} else {
-				x = mod(cursor.x + element.a, box.left + box.right);
-			}
-		}
+		if (tp === 'l' || tp === 'ml' || tp === 'bl' || tp === 'tl') {
+			x = mod(cursor.x + element.a, box.left + box.right);
+		} else if (tp === 'r' || tp === 'mr' || tp === 'br' || tp === 'tr')
+			x = mod(cursor.x - element.w - element.a, box.left + box.right);
 	}
 	if (box.up + box.down > 0) {
-		if (cursor.x >= element.x + element.a && cursor.x <= element.x + element.w + element.a) {
-			if (cursor.y >= m.y) {
-				y = mod(cursor.y - element.h - element.a, box.up + box.down);
-			} else {
-				y = mod(cursor.y + element.a, box.up + box.down);
-			}
-		}
-	}
-	return { x: x - element.a, y: y - element.a };
-}
-
-export function kiteWithCorners(box: Box, element: Element, cursor: Cursor) {
-	console.log(touchPoint(element, cursor))
-	let x = element.x + element.a;
-	let y = element.y + element.a;
-	let m = midpoint(element);
-	if (box.left + box.right > 0) {
-		if (cursor.y >= element.y && cursor.y <= element.y + element.h + 2 * element.a) {
-			if (cursor.x >= m.x) {
-				x = mod(cursor.x - element.w - element.a, box.left + box.right);
-			} else {
-				x = mod(cursor.x + element.a, box.left + box.right);
-			}
-		}
-	}
-	if (box.up + box.down > 0) {
-		if (cursor.x >= element.x && cursor.x <= element.x + element.w + 2 * element.a) {
-			if (cursor.y >= m.y) {
-				y = mod(cursor.y - element.h - element.a, box.up + box.down);
-			} else {
-				y = mod(cursor.y + element.a, box.up + box.down);
-			}
+		if (tp === 't' || tp === 'mt' || tp === 'tl' || tp === 'tr') {
+			y = mod(cursor.y + element.a, box.up + box.down);
+		} else if (tp === 'b' || tp === 'mb' || tp === 'bl' || tp === 'br') {
+			y = mod(cursor.y - element.h - element.a, box.up + box.down);
 		}
 	}
 	return { x: x - element.a, y: y - element.a };
@@ -200,36 +164,36 @@ export function touchPoint(element: Element, cursor: Cursor) {
 	} else if (
 		inTriangle(
 			cursor,
-			{x: element.x + element.a , y: element.y + element.a},
-			{x: element.x + element.a + element.w ,y: element.y + element.a},
-			{x: element.x + element.a + element.w / 2 ,y: element.y + element.a + element.h / 2}
+			{ x: element.x + element.a, y: element.y + element.a },
+			{ x: element.x + element.a + element.w, y: element.y + element.a },
+			{ x: element.x + element.a + element.w / 2, y: element.y + element.a + element.h / 2 }
 		)
 	) {
 		position = 'mt';
 	} else if (
 		inTriangle(
 			cursor,
-			{x: element.x + element.a + element.w , y: element.y + element.a},
-			{x: element.x + element.a + element.w , y: element.y + element.h + element.a},
-			{x: element.x + element.a + element.w / 2 , y: element.y + element.a + element.h / 2}
+			{ x: element.x + element.a + element.w, y: element.y + element.a },
+			{ x: element.x + element.a + element.w, y: element.y + element.h + element.a },
+			{ x: element.x + element.a + element.w / 2, y: element.y + element.a + element.h / 2 }
 		)
 	) {
 		position = 'mr';
 	} else if (
 		inTriangle(
 			cursor,
-			{x: element.x + element.a, y: element.y + element.a + element.h},
-			{x: element.x + element.a + element.w , y: element.y + element.h + element.a},
-			{x: element.x + element.a + element.w / 2 , y: element.y + element.a + element.h / 2}
+			{ x: element.x + element.a, y: element.y + element.a + element.h },
+			{ x: element.x + element.a + element.w, y: element.y + element.h + element.a },
+			{ x: element.x + element.a + element.w / 2, y: element.y + element.a + element.h / 2 }
 		)
 	) {
 		position = 'mb';
 	} else if (
 		inTriangle(
 			cursor,
-			{x: element.x + element.a, y: element.y + element.a},
-			{x: element.x + element.a , y: element.y + element.h + element.a},
-			{x: element.x + element.a + element.w / 2 , y: element.y + element.a + element.h / 2}
+			{ x: element.x + element.a, y: element.y + element.a },
+			{ x: element.x + element.a, y: element.y + element.h + element.a },
+			{ x: element.x + element.a + element.w / 2, y: element.y + element.a + element.h / 2 }
 		)
 	) {
 		position = 'ml';
@@ -247,5 +211,5 @@ export function inTriangle(point: Point, a: Point, b: Point, c: Point) {
 	let A1 = triangleArea(point, b, c);
 	let A2 = triangleArea(a, point, c);
 	let A3 = triangleArea(a, b, point);
-	return Math.abs(A - (A1 + A2 + A3)) < 1;
+	return Math.abs(A - (A1 + A2 + A3)) < 0.01;
 }

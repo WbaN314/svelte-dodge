@@ -4,7 +4,6 @@ import {
   dist,
   inside,
   randomMove,
-  randomMoveAway,
   type Box,
   type Element,
   kite,
@@ -36,22 +35,10 @@ describe("Utils", () => {
   test("randomMove", () => {
     let box: Box = { up: 100, right: 200, left: 300, down: 400 };
     let element: Element = { a: 10, x: 0, y: 0, w: 100, h: 100 };
-    for (let i = 0; i < 100; i++) {
-      let { x, y } = randomMove(box, element);
-      expect(x).toBeGreaterThanOrEqual(-element.a);
-      expect(x).toBeLessThanOrEqual(box.left + box.right - element.a);
-      expect(y).toBeGreaterThanOrEqual(-element.a);
-      expect(y).toBeLessThanOrEqual(box.up + box.down - element.a);
-    }
-  });
-
-  test("randomMoveAway", () => {
-    let box: Box = { up: 100, right: 200, left: 300, down: 400 };
-    let element: Element = { a: 10, x: 0, y: 0, w: 100, h: 100 };
 
     let cursor: Cursor = { x: 0, y: 0};
     for (let i = 0; i < 100; i++) {
-      let { x, y } = randomMoveAway(box, element, cursor);
+      let { x, y } = randomMove(box, element, cursor);
       expect(x).toBeGreaterThanOrEqual(element.x - element.a);
       expect(x).toBeLessThanOrEqual(box.left + box.right - element.a);
       expect(y).toBeGreaterThanOrEqual(element.y - element.a);
@@ -60,7 +47,7 @@ describe("Utils", () => {
 
     cursor = {...cursor, x: 100, y: 100 };
     for (let i = 0; i < 100; i++) {
-      let { x, y } = randomMoveAway(box, element, cursor);
+      let { x, y } = randomMove(box, element, cursor);
       expect(x).toSatisfy(
         (x: number) => x >= 100 - element.a || x <= 100 - element.w - element.a
       );
@@ -79,7 +66,7 @@ describe("Utils", () => {
       );
       let cursorY = Math.round(Math.random() * (box.up + box.down + element.h));
       cursor = {...cursor, x: cursorX, y: cursorY };
-      let { x, y } = randomMoveAway(box, element, cursor);
+      let { x, y } = randomMove(box, element, cursor);
       expect(x).toSatisfy(
         (x: number) =>
           x >= cursor.x - element.a || x <= cursor.x - element.w - element.a
@@ -102,7 +89,7 @@ describe("Utils", () => {
       );
       let cursorY = Math.round(Math.random() * (box.up + box.down + element.h));
       cursor = {...cursor, x: cursorX, y: cursorY };
-      let { x, y } = randomMoveAway(box, element, cursor);
+      let { x, y } = randomMove(box, element, cursor);
       expect(x).toSatisfy(
         (x: number) =>
           x >= cursor.x - element.a || x <= cursor.x - element.w - element.a
@@ -117,7 +104,7 @@ describe("Utils", () => {
     box.left = 10;
     box.right = 10;
     cursor = {...cursor, x: 0, y: 0 };
-    let { x, y } = randomMoveAway(box, element, cursor);
+    let { x, y } = randomMove(box, element, cursor);
     expect(x).toEqual(x);
     expect(y).toEqual(y);
   });
