@@ -10,6 +10,7 @@ import {
   touchPoint,
   triangleArea,
   inTriangle,
+  kiteFlip,
 } from "../lib/utils.js";
 
 describe("Utils", () => {
@@ -125,6 +126,29 @@ describe("Utils", () => {
       y = Math.round(Math.random() * (box.left + box.right + element.w));
       cursor = {...cursor, x, y};
       let { x: newX, y: newY } = kite(box, element, cursor);
+      expect(newX).toBeGreaterThanOrEqual(-element.a);
+      expect(newX).toBeLessThanOrEqual(box.left + box.right - element.a);
+      expect(newY).toBeGreaterThanOrEqual(-element.a);
+      expect(newY).toBeLessThanOrEqual(box.up + box.down - element.a);
+    }
+  });
+
+  test("kiteFlip", () => {
+    let box: Box = { up: 100, right: 200, left: 300, down: 400 };
+    let element: Element = { a: 10, x: 0, y: 0, w: 100, h: 100 };
+    let previousX = 0;
+    let previousY = 0;
+    let x = 0;
+    let y = 0;
+    let rate = 10;
+    let cursor: Cursor = {x, y};
+    for (let i = 0; i < 100; i++) {
+      previousX = cursor.x
+      previousY = cursor.y
+      x = Math.round(Math.random() * (box.left + box.right + element.w));
+      y = Math.round(Math.random() * (box.left + box.right + element.w));
+      cursor = {...cursor, x, y};
+      let { x: newX, y: newY } = kiteFlip(box, element, cursor);
       expect(newX).toBeGreaterThanOrEqual(-element.a);
       expect(newX).toBeLessThanOrEqual(box.left + box.right - element.a);
       expect(newY).toBeGreaterThanOrEqual(-element.a);
