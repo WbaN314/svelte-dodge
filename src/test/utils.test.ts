@@ -185,6 +185,13 @@ describe("Utils", () => {
     expect(touchPoint(element, cursor)).toEqual('mb')
     cursor = {...cursor, x: 30, y: 60}
     expect(touchPoint(element, cursor)).toEqual('ml')
+    for(let i = 0; i < 1000; i++) {
+      cursor = {...cursor, x: Math.random() * 120, y: Math.random() * 120}; 
+      if(!touchPoint(element, cursor)){
+        console.log(cursor)
+      }
+      expect(touchPoint(element, cursor)).toBeDefined()
+    }
   });
 
   test('inTriangle', () => {

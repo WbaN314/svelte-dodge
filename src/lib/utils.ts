@@ -200,7 +200,7 @@ export function touchPoint(element: Element, cursor: Cursor) {
 	} else if (
 		inTriangle(
 			cursor,
-			{x: element.x + element.a ,y: element.y + element.a},
+			{x: element.x + element.a , y: element.y + element.a},
 			{x: element.x + element.a + element.w ,y: element.y + element.a},
 			{x: element.x + element.a + element.w / 2 ,y: element.y + element.a + element.h / 2}
 		)
@@ -247,5 +247,5 @@ export function inTriangle(point: Point, a: Point, b: Point, c: Point) {
 	let A1 = triangleArea(point, b, c);
 	let A2 = triangleArea(a, point, c);
 	let A3 = triangleArea(a, b, point);
-	return A == A1 + A2 + A3;
+	return Math.abs(A - (A1 + A2 + A3)) < 1;
 }
