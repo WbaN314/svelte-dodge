@@ -12,7 +12,7 @@
 
 	type Mode = 'random' | 'kite' | 'kite-flip';
 
-	export let mode: Mode = 'random';
+	export let mode: Mode = 'kite-flip';
 	export let dodge = true;
 	export let debug = false;
 	export let box: Box = { up: 100, right: 100, down: 100, left: 100 };

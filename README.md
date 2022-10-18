@@ -6,6 +6,9 @@ Make components dodge the pointer.
 
 - Written in Svelte with Typescript
 - No external 3rd party dependencies
+- Easy-to-use by just wrapping any element or component
+- Multiple movement modes
+- Debug mode to visualize possible movement
 
 ## Installation
 
@@ -35,9 +38,9 @@ npm i -D svelte-dodge
 |box|100 each|Size of possible movement area (additional to element size) in px in the directions up, down, left and right.|
 |debug|false|Show activation and movement area for debugging.|
 |dodge|true|Toggle the movement.|
-|duration|0.1|Transition duration in s when movement is triggered.|
-|mode|'random-away'|See movement.|
-|rate|10|Update rate on cursor position and movement trigger detection in ms.|
+|duration|0|Transition duration in s when movement is triggered.|
+|mode|'kite-flip'|See movement.|
+|rate|0|Update rate on cursor position and movement trigger detection in ms. If set to 0 it uses the native browser rate.|
 
 ## Movement
 
@@ -45,7 +48,8 @@ Movement is triggered whenever the cursor moves inside the activation area. It i
 
 | Value |Description|
 |-----|--------------|
-|'random'|Move to random spot im movement area when triggered.|
-|'random-away'|Move to random spot im movement area when triggered. Make sure the cursor is not inside element after moving.|
+|'random'|Move to random spot im movement area when triggered. Make sure the cursor is not inside element after moving.|
+|'kite'|Move away from cursor. When edge of area is reached flip to other side of area.|
+|'kite-flip'|Move away from cursor. When edge of area is reached flip to other side of cursor.|
 
 
