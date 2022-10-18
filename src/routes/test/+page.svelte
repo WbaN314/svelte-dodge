@@ -1,17 +1,25 @@
 <script lang="ts">
 	import Dodge from '$lib/Dodge.svelte';
 
-	export let mode = 'kite-flip';
-	export let dodge = true;
-	export let debug = true;
-	export let box: Box = { up: 100, right: 100, down: 100, left: 100 };
-	export let activationDistance = 20;
-	export let duration = 0;
-	export let rate = 0;
+	let mode = 'kite-flip';
+	let dodge = true;
+	let debug = true;
+	let box: Box = { up: 100, right: 100, down: 100, left: 100 };
+	let activationDistance = 20;
+	let duration = 0;
+	let rate = 0;
+
+	let width = 100;
+	let height = 100;
+
+	let rerender = false;
 </script>
 
 <div class="container">
 	<div class="controls">
+
+		<h1>Box</h1>
+
 		<h3>Mode</h3>
 		<select bind:value={mode}>
 			<option value="kite-flip"> kite-flip </option>
@@ -49,13 +57,25 @@
 
 		<h3>Rate</h3>
 		<input bind:value={rate} />
+
+		<h1>Element</h1>
+
+		<h3>Size</h3>
+		<div>width</div>
+		<input bind:value={width} />
+		<div>height</div>
+		<input bind:value={height} />
+
+		<button on:click={() => rerender = !rerender}>Rerender</button>
 	</div>
 
+	{#key rerender}
 	<div class="cell">
 		<Dodge {debug} {dodge} {mode} {box} {activationDistance} {rate} {duration}>
-			<div class="test" />
+			<div class="test" style:width={`${width}px`}/>
 		</Dodge>
 	</div>
+	{/key}
 </div>
 
 <style>
@@ -63,6 +83,7 @@
 		width: 100px;
 		height: 100px;
 		overflow-wrap: break-word;
+		background-color: green;
 	}
 
 	.list {
