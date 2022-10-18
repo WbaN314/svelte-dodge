@@ -8,7 +8,7 @@
 <div class="container">
 
   <div class="cell">
-    <Dodge debug mode="kite-flip">
+    <Dodge debug mode="kite" box={{up: 0, down: 0, left: 100, right: 100}}>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         class="test"
@@ -35,7 +35,7 @@
   </div>
 
   <div class="cell">
-    <Dodge debug>
+    <Dodge debug mode="kite" box={{up: 100, down: 100, left: 0, right: 0}}>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         class="test"

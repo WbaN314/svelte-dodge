@@ -87,16 +87,26 @@ export function kite(box: Box, element: Element, cursor: Cursor) {
 	let y = element.y + element.a;
 	let m = midpoint(element);
 	let tp = touchPoint(element, cursor);
-	if (box.left + box.right > 0) {
+	if (box.left + box.right > 0 && box.up + box.down > 0) {
 		if (tp === 'l' || tp === 'ml' || tp === 'bl' || tp === 'tl') {
 			x = mod(cursor.x + element.a, box.left + box.right);
 		} else if (tp === 'r' || tp === 'mr' || tp === 'br' || tp === 'tr')
 			x = mod(cursor.x - element.w - element.a, box.left + box.right);
-	}
-	if (box.up + box.down > 0) {
 		if (tp === 't' || tp === 'mt' || tp === 'tl' || tp === 'tr') {
 			y = mod(cursor.y + element.a, box.up + box.down);
 		} else if (tp === 'b' || tp === 'mb' || tp === 'bl' || tp === 'br') {
+			y = mod(cursor.y - element.h - element.a, box.up + box.down);
+		}
+	} else if (box.left + box.right > 0) {
+		if (cursor.x <= m.x) {
+			x = mod(cursor.x + element.a, box.left + box.right);
+		} else {
+			x = mod(cursor.x - element.w - element.a, box.left + box.right);
+		}
+	} else if (box.up + box.down > 0) {
+		if (cursor.y <= m.y) {
+			y = mod(cursor.y + element.a, box.up + box.down);
+		} else {
 			y = mod(cursor.y - element.h - element.a, box.up + box.down);
 		}
 	}
@@ -108,7 +118,7 @@ export function kiteFlip(box: Box, element: Element, cursor: Cursor) {
 	let y = element.y + element.a;
 	let m = midpoint(element);
 	let tp = touchPoint(element, cursor);
-	if (box.left + box.right > 0) {
+	if (box.left + box.right > 0 && box.up + box.down > 0) {
 		if (tp === 'l' || tp === 'ml' || tp === 'bl' || tp === 'tl') {
 			x = cursor.x + element.a
 			if (x > box.left + box.right) {
@@ -120,14 +130,36 @@ export function kiteFlip(box: Box, element: Element, cursor: Cursor) {
 				x = cursor.x + element.a;
 			}
 		}
-	}
-	if (box.up + box.down > 0) {
 		if (tp === 't' || tp === 'mt' || tp === 'tl' || tp === 'tr') {
 			y = cursor.y + element.a
 			if (y > box.up + box.down) {
 				y = cursor.y - element.h - element.a
 			}
 		} else if (tp === 'b' || tp === 'mb' || tp === 'bl' || tp === 'br') {
+			y = cursor.y - element.h - element.a;
+			if (y < 0) {
+				y = cursor.y + element.a;
+			}
+		}
+	} else if (box.left + box.right > 0) {
+		if (cursor.x <= m.x) {
+			x = cursor.x + element.a
+			if (x > box.left + box.right) {
+				x = cursor.x - element.w - element.a
+			}
+		} else {
+			x = cursor.x - element.w - element.a;
+			if (x < 0) {
+				x = cursor.x + element.a;
+			}
+		}
+	} else if (box.up + box.down > 0) {
+		if (cursor.y <= m.y) {
+			y = cursor.y + element.a
+			if (y > box.up + box.down) {
+				y = cursor.y - element.h - element.a
+			}
+		} else {
 			y = cursor.y - element.h - element.a;
 			if (y < 0) {
 				y = cursor.y + element.a;
@@ -145,7 +177,7 @@ export function touchPoint(element: Element, cursor: Cursor) {
 		cursor.y >= element.y &&
 		cursor.y < element.y + element.a
 	) {
-		position = 'tl';
+		position = 'tl'
 	} else if (
 		cursor.x > element.x + element.w + element.a &&
 		cursor.x <= element.x + element.w + 2 * element.a &&
