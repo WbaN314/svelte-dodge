@@ -40,9 +40,6 @@
 
 	function handleMove(e: PointerEvent) {
 		updateCursorPosition(e);
-
-		console.log(cursor);
-
 		if (dodge && !transitioning) {
 			switch (mode) {
 				case 'random':
