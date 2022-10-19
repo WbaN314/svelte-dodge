@@ -1,7 +1,7 @@
 {
 	"name": "svelte-dodge",
 	"description": "Make components dodge the pointer.",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "svelte-kit sync && svelte-package",
