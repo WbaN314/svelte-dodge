@@ -61,8 +61,8 @@ export function inside(a: Point, b: Square) {
 }
 
 export function randomMove(box: Box, element: Element, cursor: Cursor): Point {
-	let x = element.x + element.a;
-	let y = element.y + element.a;
+	let x = element.x;
+	let y = element.y;
 	let tp = touchPoint(element, cursor);
 	if (tp) {
 		if (box.left + box.right > 0) {
@@ -78,7 +78,7 @@ export function randomMove(box: Box, element: Element, cursor: Cursor): Point {
 			);
 		}
 	}
-	return { x: x - element.a, y: y - element.a };
+	return { x, y };
 }
 
 function midpoint(element: Element) {
@@ -88,8 +88,8 @@ function midpoint(element: Element) {
 }
 
 export function kite(box: Box, element: Element, cursor: Cursor) {
-	let x = element.x + element.a;
-	let y = element.y + element.a;
+	let x = element.x;
+	let y = element.y;
 	let m = midpoint(element);
 	let tp = touchPoint(element, cursor);
 	if (box.left + box.right > 0 && box.up + box.down > 0) {
@@ -115,12 +115,12 @@ export function kite(box: Box, element: Element, cursor: Cursor) {
 			y = mod(cursor.y - element.h - element.a, box.up + box.down);
 		}
 	}
-	return { x: x - element.a, y: y - element.a };
+	return { x, y };
 }
 
 export function kiteFlip(box: Box, element: Element, cursor: Cursor) {
-	let x = element.x + element.a;
-	let y = element.y + element.a;
+	let x = element.x;
+	let y = element.y;
 	let m = midpoint(element);
 	let tp = touchPoint(element, cursor);
 
@@ -172,7 +172,7 @@ export function kiteFlip(box: Box, element: Element, cursor: Cursor) {
 			}
 		}
 	}
-	return { x: x - element.a, y: y - element.a };
+	return { x, y };
 }
 
 export function touchPoint(element: Element, cursor: Cursor) {
