@@ -40,25 +40,25 @@ describe("Utils", () => {
     let cursor: Cursor = { x: 0, y: 0};
     for (let i = 0; i < 100; i++) {
       let { x, y } = randomMove(box, element, cursor);
-      expect(x).toBeGreaterThanOrEqual(element.x - element.a);
-      expect(x).toBeLessThanOrEqual(box.left + box.right - element.a);
-      expect(y).toBeGreaterThanOrEqual(element.y - element.a);
-      expect(y).toBeLessThanOrEqual(box.up + box.down - element.a);
+      expect(x).toBeGreaterThanOrEqual(element.x);
+      expect(x).toBeLessThanOrEqual(box.left + box.right);
+      expect(y).toBeGreaterThanOrEqual(element.y);
+      expect(y).toBeLessThanOrEqual(box.up + box.down);
     }
 
     cursor = {...cursor, x: 100, y: 100 };
     for (let i = 0; i < 100; i++) {
       let { x, y } = randomMove(box, element, cursor);
       expect(x).toSatisfy(
-        (x: number) => x >= 100 - element.a || x <= 100 - element.w - element.a
+        (x: number) => x >= 100 || x <= 100 - element.w
       );
       expect(y).toSatisfy(
-        (y: number) => y >= 100 - element.a || y <= 100 - element.h - element.a
+        (y: number) => y >= 100 || y <= 100 - element.h
       );
-      expect(x).toBeGreaterThanOrEqual(-element.a);
-      expect(x).toBeLessThanOrEqual(box.left + box.right - element.a);
-      expect(y).toBeGreaterThanOrEqual(-element.a);
-      expect(y).toBeLessThanOrEqual(box.up + box.down - element.a);
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(x).toBeLessThanOrEqual(box.left + box.right);
+      expect(y).toBeGreaterThanOrEqual(0);
+      expect(y).toBeLessThanOrEqual(box.up + box.down);
     }
 
     for (let i = 0; i < 100; i++) {
@@ -70,16 +70,22 @@ describe("Utils", () => {
       let { x, y } = randomMove(box, element, cursor);
       expect(x).toSatisfy(
         (x: number) =>
-          x >= cursor.x - element.a || x <= cursor.x - element.w - element.a
+          x >= cursor.x || x <= cursor.x - element.w
       );
+      if(!(x >= cursor.x || x <= cursor.x - element.w)){
+        console.log(element, cursor)
+      }
       expect(y).toSatisfy(
         (y: number) =>
-          y >= cursor.y - element.a || y <= cursor.y - element.h - element.a
+          y >= cursor.y || y <= cursor.y - element.h
       );
-      expect(x).toBeGreaterThanOrEqual(-element.a);
-      expect(x).toBeLessThanOrEqual(box.left + box.right - element.a);
-      expect(y).toBeGreaterThanOrEqual(-element.a);
-      expect(y).toBeLessThanOrEqual(box.up + box.down - element.a);
+      if(!(y >= cursor.y || y <= cursor.y - element.h)){
+        console.log(element, cursor)
+      }
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(x).toBeLessThanOrEqual(box.left + box.right);
+      expect(y).toBeGreaterThanOrEqual(0);
+      expect(y).toBeLessThanOrEqual(box.up + box.down);
     }
 
     box.up = 0;
@@ -93,10 +99,10 @@ describe("Utils", () => {
       let { x, y } = randomMove(box, element, cursor);
       expect(x).toSatisfy(
         (x: number) =>
-          x >= cursor.x - element.a || x <= cursor.x - element.w - element.a
+          x >= cursor.x || x <= cursor.x - element.w
       );
-      expect(x).toBeGreaterThanOrEqual(-element.a);
-      expect(x).toBeLessThanOrEqual(box.left + box.right - element.a);
+      expect(x).toBeGreaterThanOrEqual(0);
+      expect(x).toBeLessThanOrEqual(box.left + box.right);
       expect(y).toEqual(y);
     }
 
@@ -126,10 +132,10 @@ describe("Utils", () => {
       y = Math.round(Math.random() * (box.left + box.right + element.w));
       cursor = {...cursor, x, y};
       let { x: newX, y: newY } = kite(box, element, cursor);
-      expect(newX).toBeGreaterThanOrEqual(-element.a);
-      expect(newX).toBeLessThanOrEqual(box.left + box.right - element.a);
-      expect(newY).toBeGreaterThanOrEqual(-element.a);
-      expect(newY).toBeLessThanOrEqual(box.up + box.down - element.a);
+      expect(newX).toBeGreaterThanOrEqual(0);
+      expect(newX).toBeLessThanOrEqual(box.left + box.right);
+      expect(newY).toBeGreaterThanOrEqual(0);
+      expect(newY).toBeLessThanOrEqual(box.up + box.down);
     }
   });
 
@@ -149,10 +155,10 @@ describe("Utils", () => {
       y = Math.round(Math.random() * (box.left + box.right + element.w));
       cursor = {...cursor, x, y};
       let { x: newX, y: newY } = kiteFlip(box, element, cursor);
-      expect(newX).toBeGreaterThanOrEqual(-element.a);
-      expect(newX).toBeLessThanOrEqual(box.left + box.right - element.a);
-      expect(newY).toBeGreaterThanOrEqual(-element.a);
-      expect(newY).toBeLessThanOrEqual(box.up + box.down - element.a);
+      expect(newX).toBeGreaterThanOrEqual(0);
+      expect(newX).toBeLessThanOrEqual(box.left + box.right);
+      expect(newY).toBeGreaterThanOrEqual(0);
+      expect(newY).toBeLessThanOrEqual(box.up + box.down);
     }
   });
 
