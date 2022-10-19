@@ -33,12 +33,6 @@
 			<option value={false}> false </option>
 		</select>
 
-		<h3>Debug</h3>
-		<select bind:value={debug}>
-			<option value={true}> true </option>
-			<option value={false}> false </option>
-		</select>
-
 		<h3>Box</h3>
 		<div>up</div>
 		<input bind:value={box.up} />
