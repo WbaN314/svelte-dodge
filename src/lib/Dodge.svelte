@@ -40,7 +40,6 @@
 	};
 
 	function handleMove(e: PointerEvent) {
-		console.log(element.a)
 		updateCursorPosition(e);
 		if (!touchPoint(element, cursor)) {
 			return
