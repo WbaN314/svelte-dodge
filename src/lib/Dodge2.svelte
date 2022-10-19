@@ -21,17 +21,15 @@
 
 	let transitioning = false;
 
-	let dummyW: number;
-	let dummyH: number;
-
 	let element: Element;
 	let elementW: number;
 	let elementH: number;
-
 	$: element = {
 		a: activationDistance,
-		x: box.left - activationDistance,
-		y: box.up - activationDistance,
+		baseX: elementBind?.getBoundingClientRect().x,
+		baseY: elementBind?.getBoundingClientRect().y,
+		x: box.left,
+		y: box.up,
 		w: elementW,
 		h: elementH
 	};
@@ -42,11 +40,13 @@
 		y: 0,
 	};
 
-	function handleMove() {
+	function handleMove(e: PointerEvent) {
+
+		updateCursorPosition(e)
+
+		console.log(cursor)
+
 		if (dodge && !transitioning) {
-
-            
-
 			switch (mode) {
 				case 'random':
 					element = { ...element, ...randomMove(box, element, cursor) };
@@ -60,23 +60,26 @@
 		}
 	}
 
-	let areaBind: HTMLElement;
+	let elementBind: HTMLElement;
 	function updateCursorPosition(e: PointerEvent) {
-		cursor.x = e.x - areaBind.getBoundingClientRect().x;
-		cursor.y = e.y - areaBind.getBoundingClientRect().y;
+		cursor.x = e.x - element.baseX + element.a + box.left;
+		cursor.y = e.y - element.baseY + element.a + box.up;
 	}
 
 	const limitedHandleMove = rateLimit(handleMove, rate);
-	const limitedUpdateCursorPosition = rateLimit(updateCursorPosition, rate);
 </script>
 
-<svelte:body on:pointermove={(e) => handleMove(e)}/>
+<svelte:body on:pointermove={(e) => limitedHandleMove(e)}/>
 
 <div
     bind:clientHeight={elementH}
     bind:clientWidth={elementW}
+	bind:this={elementBind}
     on:transitionend={() => transitioning = false}
     on:transitionstart={() => transitioning = true}
+	style={`
+	transform: translate(${element.x - box.left}px, ${element.y - box.up}px)
+	`}
     >
     <slot/>
 </div>

@@ -19,6 +19,8 @@ export interface Box {
 
 export interface Element extends Square {
 	a: number;
+	baseX: number;
+	baseY: number;
 }
 
 export interface Cursor {
@@ -61,17 +63,20 @@ export function inside(a: Point, b: Square) {
 export function randomMove(box: Box, element: Element, cursor: Cursor): Point {
 	let x = element.x + element.a;
 	let y = element.y + element.a;
-	if (box.left + box.right > 0) {
-		x = mod(
-			Math.round(Math.random() * (box.left + box.right - element.w) + cursor.x),
-			box.left + box.right
-		);
-	}
-	if (box.up + box.down > 0) {
-		y = mod(
-			Math.round(Math.random() * (box.up + box.down - element.h) + cursor.y),
-			box.up + box.down
-		);
+	let tp = touchPoint(element, cursor);
+	if (tp) {
+		if (box.left + box.right > 0) {
+			x = mod(
+				Math.round(Math.random() * (box.left + box.right - element.w) + cursor.x),
+				box.left + box.right
+			);
+		}
+		if (box.up + box.down > 0) {
+			y = mod(
+				Math.round(Math.random() * (box.up + box.down - element.h) + cursor.y),
+				box.up + box.down
+			);
+		}
 	}
 	return { x: x - element.a, y: y - element.a };
 }
