@@ -8,7 +8,6 @@ Make components dodge the pointer.
 - No external 3rd party dependencies
 - Easy-to-use by just wrapping any element or component
 - Multiple movement modes
-- Debug mode to visualize possible movement
 
 ## Installation
 
@@ -36,7 +35,6 @@ npm i -D svelte-dodge
 |-----|---------------|--------------|
 |activationDistance|20|Activation distance in px.|
 |box|100 each|Size of possible movement area (additional to element size) in px in the directions up, down, left and right.|
-|debug|false|Show activation and movement area for debugging.|
 |dodge|true|Toggle the movement.|
 |duration|0|Transition duration in s when movement is triggered.|
 |mode|'kite-flip'|See movement.|

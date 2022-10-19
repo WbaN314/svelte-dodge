@@ -71,9 +71,14 @@
 
 	{#key rerender}
 	<div class="cell">
-		<Dodge {debug} {dodge} {mode} {box} {activationDistance} {rate} {duration}>
-			<div class="test" style:width={`${width}px`}/>
-		</Dodge>
+		<div class="debug"
+		 style={`
+		 padding: ${box.up}px ${box.right}px ${box.left}px ${box.down}px
+		 `}>
+			<Dodge {debug} {dodge} {mode} {box} {activationDistance} {rate} {duration}>
+				<div class="test" style:width={`${width}px`}/>
+			</Dodge>
+		</div>
 	</div>
 	{/key}
 </div>
@@ -86,8 +91,8 @@
 		background-color: green;
 	}
 
-	.list {
-		display: grid;
+	.debug {
+		background-color: rgb(255,0,0,0.2)
 	}
 
 	.controls {

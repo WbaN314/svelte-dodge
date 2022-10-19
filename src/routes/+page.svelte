@@ -8,7 +8,7 @@
 <div class="container">
 
   <div class="cell">
-    <Dodge debug mode="kite" box={{up: 0, down: 0, left: 100, right: 100}}>
+    <Dodge mode="kite" box={{up: 0, down: 0, left: 100, right: 100}}>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         class="test"
@@ -35,7 +35,7 @@
   </div>
 
   <div class="cell">
-    <Dodge debug mode="kite" box={{up: 100, down: 100, left: 0, right: 0}}>
+    <Dodge mode="kite" box={{up: 100, down: 100, left: 0, right: 0}}>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         class="test"
@@ -58,14 +58,13 @@
   </div>
 
   <div class="cell">
-    <Dodge debug box={{ up: 100, right: 140, left: 140, down: 100 }} mode={"kite"}>
+    <Dodge box={{ up: 100, right: 140, left: 140, down: 100 }} mode={"kite"}>
       <div class="test" />
     </Dodge>
   </div>
 
   <div class="cell">
     <Dodge
-      debug
       box={{ up: 0, right: 160, left: 160, down: 0 }}
       activationDistance={60}
     >
