@@ -37,7 +37,7 @@ describe("Utils", () => {
     let box: Box = { up: 100, right: 200, left: 300, down: 400 };
     let element: Element = { a: 10, x: 0, y: 0, w: 100, h: 100 };
 
-    let cursor: Cursor = { x: 0, y: 0};
+    let cursor: Cursor = { x: 0, y: 0 };
     for (let i = 0; i < 100; i++) {
       let { x, y } = randomMove(box, element, cursor);
       expect(x).toBeGreaterThanOrEqual(element.x);
@@ -46,7 +46,7 @@ describe("Utils", () => {
       expect(y).toBeLessThanOrEqual(box.up + box.down);
     }
 
-    cursor = {...cursor, x: 100, y: 100 };
+    cursor = { ...cursor, x: 100, y: 100 };
     for (let i = 0; i < 100; i++) {
       let { x, y } = randomMove(box, element, cursor);
       expect(x).toSatisfy(
@@ -66,22 +66,18 @@ describe("Utils", () => {
         Math.random() * (box.left + box.right + element.w)
       );
       let cursorY = Math.round(Math.random() * (box.up + box.down + element.h));
-      cursor = {...cursor, x: cursorX, y: cursorY };
+      cursor = { ...cursor, x: cursorX, y: cursorY };
       let { x, y } = randomMove(box, element, cursor);
-      expect(x).toSatisfy(
-        (x: number) =>
-          x >= cursor.x || x <= cursor.x - element.w
-      );
-      if(!(x >= cursor.x || x <= cursor.x - element.w)){
-        console.log(element, cursor)
-      }
-      expect(y).toSatisfy(
-        (y: number) =>
-          y >= cursor.y || y <= cursor.y - element.h
-      );
-      if(!(y >= cursor.y || y <= cursor.y - element.h)){
-        console.log(element, cursor)
-      }
+      if (touchPoint(element, cursor)) {
+        expect(x).toSatisfy(
+          (x: number) =>
+            x >= cursor.x || x <= cursor.x - element.w
+        );
+        expect(y).toSatisfy(
+          (y: number) =>
+            y >= cursor.y || y <= cursor.y - element.h
+        );
+      };
       expect(x).toBeGreaterThanOrEqual(0);
       expect(x).toBeLessThanOrEqual(box.left + box.right);
       expect(y).toBeGreaterThanOrEqual(0);
@@ -95,7 +91,7 @@ describe("Utils", () => {
         Math.random() * (box.left + box.right + element.w)
       );
       let cursorY = Math.round(Math.random() * (box.up + box.down + element.h));
-      cursor = {...cursor, x: cursorX, y: cursorY };
+      cursor = { ...cursor, x: cursorX, y: cursorY };
       let { x, y } = randomMove(box, element, cursor);
       expect(x).toSatisfy(
         (x: number) =>
@@ -110,7 +106,7 @@ describe("Utils", () => {
     box.down = 0;
     box.left = 10;
     box.right = 10;
-    cursor = {...cursor, x: 0, y: 0 };
+    cursor = { ...cursor, x: 0, y: 0 };
     let { x, y } = randomMove(box, element, cursor);
     expect(x).toEqual(x);
     expect(y).toEqual(y);
@@ -124,13 +120,13 @@ describe("Utils", () => {
     let x = 0;
     let y = 0;
     let rate = 10;
-    let cursor: Cursor = {x, y};
+    let cursor: Cursor = { x, y };
     for (let i = 0; i < 100; i++) {
       previousX = cursor.x
       previousY = cursor.y
       x = Math.round(Math.random() * (box.left + box.right + element.w));
       y = Math.round(Math.random() * (box.left + box.right + element.w));
-      cursor = {...cursor, x, y};
+      cursor = { ...cursor, x, y };
       let { x: newX, y: newY } = kite(box, element, cursor);
       expect(newX).toBeGreaterThanOrEqual(0);
       expect(newX).toBeLessThanOrEqual(box.left + box.right);
@@ -147,13 +143,13 @@ describe("Utils", () => {
     let x = 0;
     let y = 0;
     let rate = 10;
-    let cursor: Cursor = {x, y};
+    let cursor: Cursor = { x, y };
     for (let i = 0; i < 100; i++) {
       previousX = cursor.x
       previousY = cursor.y
       x = Math.round(Math.random() * (box.left + box.right + element.w));
       y = Math.round(Math.random() * (box.left + box.right + element.w));
-      cursor = {...cursor, x, y};
+      cursor = { ...cursor, x, y };
       let { x: newX, y: newY } = kiteFlip(box, element, cursor);
       expect(newX).toBeGreaterThanOrEqual(0);
       expect(newX).toBeLessThanOrEqual(box.left + box.right);
@@ -170,41 +166,41 @@ describe("Utils", () => {
       h: 100,
       a: 10
     }
-    let cursor = {x: -10, y: -10}
+    let cursor = { x: -10, y: -10 }
     expect(touchPoint(element, cursor)).toEqual('tl')
-    cursor = {...cursor, x: 110, y: -10}
+    cursor = { ...cursor, x: 110, y: -10 }
     expect(touchPoint(element, cursor)).toEqual('tr')
-    cursor = {...cursor, x: -10, y: 110}
+    cursor = { ...cursor, x: -10, y: 110 }
     expect(touchPoint(element, cursor)).toEqual('bl')
-    cursor = {...cursor, x: 110, y: 110}
+    cursor = { ...cursor, x: 110, y: 110 }
     expect(touchPoint(element, cursor)).toEqual('br')
-    cursor = {...cursor, x: 0, y: -10}
+    cursor = { ...cursor, x: 0, y: -10 }
     expect(touchPoint(element, cursor)).toEqual('t')
-    cursor = {...cursor, x: 100, y: -10}
+    cursor = { ...cursor, x: 100, y: -10 }
     expect(touchPoint(element, cursor)).toEqual('t')
-    cursor = {...cursor, x: 100, y: 110}
+    cursor = { ...cursor, x: 100, y: 110 }
     expect(touchPoint(element, cursor)).toEqual('b')
-    cursor = {...cursor, x: 0, y: 110}
+    cursor = { ...cursor, x: 0, y: 110 }
     expect(touchPoint(element, cursor)).toEqual('b')
-    cursor = {...cursor, x: -10, y: 0}
+    cursor = { ...cursor, x: -10, y: 0 }
     expect(touchPoint(element, cursor)).toEqual('l')
-    cursor = {...cursor, x: -10, y: 100}
+    cursor = { ...cursor, x: -10, y: 100 }
     expect(touchPoint(element, cursor)).toEqual('l')
-    cursor = {...cursor, x: 110, y: 100}
+    cursor = { ...cursor, x: 110, y: 100 }
     expect(touchPoint(element, cursor)).toEqual('r')
-    cursor = {...cursor, x: 110, y: 0}
+    cursor = { ...cursor, x: 110, y: 0 }
     expect(touchPoint(element, cursor)).toEqual('r')
-    cursor = {...cursor, x: 50, y: 0}
+    cursor = { ...cursor, x: 50, y: 0 }
     expect(touchPoint(element, cursor)).toEqual('mt')
-    cursor = {...cursor, x: 100, y: 50}
+    cursor = { ...cursor, x: 100, y: 50 }
     expect(touchPoint(element, cursor)).toEqual('mr')
-    cursor = {...cursor, x: 50, y: 100}
+    cursor = { ...cursor, x: 50, y: 100 }
     expect(touchPoint(element, cursor)).toEqual('mb')
-    cursor = {...cursor, x: 0, y: 50}
+    cursor = { ...cursor, x: 0, y: 50 }
     expect(touchPoint(element, cursor)).toEqual('ml')
-    for(let i = 0; i < 1000; i++) {
-      cursor = {...cursor, x: Math.random() * 120 - 10, y: Math.random() * 120 - 10}; 
-      if(!touchPoint(element, cursor)){
+    for (let i = 0; i < 1000; i++) {
+      cursor = { ...cursor, x: Math.random() * 120 - 10, y: Math.random() * 120 - 10 };
+      if (!touchPoint(element, cursor)) {
         console.log(cursor)
       }
       expect(touchPoint(element, cursor)).toBeDefined()
@@ -212,21 +208,21 @@ describe("Utils", () => {
   });
 
   test('inTriangle', () => {
-    let a = {x: 0, y: 0};
-    let b = {x: 1, y: 0};
-    let c = {x: 0, y: 1};
-    let p = {x: 0.5, y: 0.5};
+    let a = { x: 0, y: 0 };
+    let b = { x: 1, y: 0 };
+    let c = { x: 0, y: 1 };
+    let p = { x: 0.5, y: 0.5 };
     expect(inTriangle(p, a, b, c)).toEqual(true)
   });
 
   test('triangleArea', () => {
-    let a = {x: 0, y: 0};
-    let b = {x: 1, y: 0};
-    let c = {x: 0, y: 1};
+    let a = { x: 0, y: 0 };
+    let b = { x: 1, y: 0 };
+    let c = { x: 0, y: 1 };
     expect(triangleArea(a, b, c)).toEqual(0.5);
-    a = {x: 0, y: 0};
-    b = {x: 2, y: 0};
-    c = {x: 0, y: 2};
+    a = { x: 0, y: 0 };
+    b = { x: 2, y: 0 };
+    c = { x: 0, y: 2 };
     expect(triangleArea(a, b, c)).toEqual(2);
   });
 });
