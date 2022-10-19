@@ -62,8 +62,8 @@
 
 	let elementBind: HTMLElement;
 	function updateCursorPosition(e: PointerEvent) {
-		cursor.x = e.x - element.baseX + element.a + box.left;
-		cursor.y = e.y - element.baseY + element.a + box.up;
+		cursor.x = e.x - element.baseX + box.left;
+		cursor.y = e.y - element.baseY + box.up;
 	}
 
 	const limitedHandleMove = rateLimit(handleMove, rate);

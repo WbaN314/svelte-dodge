@@ -164,40 +164,40 @@ describe("Utils", () => {
       h: 100,
       a: 10
     }
-    let cursor = {x: 0, y: 0}
+    let cursor = {x: -10, y: -10}
     expect(touchPoint(element, cursor)).toEqual('tl')
-    cursor = {...cursor, x: 120, y: 0}
+    cursor = {...cursor, x: 110, y: -10}
     expect(touchPoint(element, cursor)).toEqual('tr')
-    cursor = {...cursor, x: 0, y: 120}
+    cursor = {...cursor, x: -10, y: 110}
     expect(touchPoint(element, cursor)).toEqual('bl')
-    cursor = {...cursor, x: 120, y: 120}
+    cursor = {...cursor, x: 110, y: 110}
     expect(touchPoint(element, cursor)).toEqual('br')
-    cursor = {...cursor, x: 10, y: 0}
+    cursor = {...cursor, x: 0, y: -10}
     expect(touchPoint(element, cursor)).toEqual('t')
-    cursor = {...cursor, x: 110, y: 0}
+    cursor = {...cursor, x: 100, y: -10}
     expect(touchPoint(element, cursor)).toEqual('t')
-    cursor = {...cursor, x: 110, y: 120}
+    cursor = {...cursor, x: 100, y: 110}
     expect(touchPoint(element, cursor)).toEqual('b')
-    cursor = {...cursor, x: 10, y: 120}
-    expect(touchPoint(element, cursor)).toEqual('b')
-    cursor = {...cursor, x: 0, y: 10}
-    expect(touchPoint(element, cursor)).toEqual('l')
     cursor = {...cursor, x: 0, y: 110}
+    expect(touchPoint(element, cursor)).toEqual('b')
+    cursor = {...cursor, x: -10, y: 0}
     expect(touchPoint(element, cursor)).toEqual('l')
-    cursor = {...cursor, x: 120, y: 110}
+    cursor = {...cursor, x: -10, y: 100}
+    expect(touchPoint(element, cursor)).toEqual('l')
+    cursor = {...cursor, x: 110, y: 100}
     expect(touchPoint(element, cursor)).toEqual('r')
-    cursor = {...cursor, x: 120, y: 10}
+    cursor = {...cursor, x: 110, y: 0}
     expect(touchPoint(element, cursor)).toEqual('r')
-    cursor = {...cursor, x: 60, y: 30}
+    cursor = {...cursor, x: 50, y: 0}
     expect(touchPoint(element, cursor)).toEqual('mt')
-    cursor = {...cursor, x: 90, y: 60}
+    cursor = {...cursor, x: 100, y: 50}
     expect(touchPoint(element, cursor)).toEqual('mr')
-    cursor = {...cursor, x: 60, y: 90}
+    cursor = {...cursor, x: 50, y: 100}
     expect(touchPoint(element, cursor)).toEqual('mb')
-    cursor = {...cursor, x: 30, y: 60}
+    cursor = {...cursor, x: 0, y: 50}
     expect(touchPoint(element, cursor)).toEqual('ml')
     for(let i = 0; i < 1000; i++) {
-      cursor = {...cursor, x: Math.random() * 120, y: Math.random() * 120}; 
+      cursor = {...cursor, x: Math.random() * 120 - 10, y: Math.random() * 120 - 10}; 
       if(!touchPoint(element, cursor)){
         console.log(cursor)
       }

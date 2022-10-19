@@ -123,6 +123,7 @@ export function kiteFlip(box: Box, element: Element, cursor: Cursor) {
 	let y = element.y + element.a;
 	let m = midpoint(element);
 	let tp = touchPoint(element, cursor);
+
 	if (box.left + box.right > 0 && box.up + box.down > 0) {
 		if (tp === 'l' || tp === 'ml' || tp === 'bl' || tp === 'tl') {
 			x = cursor.x + element.a
@@ -177,99 +178,98 @@ export function kiteFlip(box: Box, element: Element, cursor: Cursor) {
 export function touchPoint(element: Element, cursor: Cursor) {
 	let position;
 	if (
-		cursor.x >= element.x &&
-		cursor.x < element.x + element.a &&
-		cursor.y >= element.y &&
-		cursor.y < element.y + element.a
+		cursor.x >= element.x - element.a &&
+		cursor.x < element.x &&
+		cursor.y >= element.y - element.a &&
+		cursor.y < element.y
 	) {
 		position = 'tl'
 	} else if (
-		cursor.x > element.x + element.w + element.a &&
-		cursor.x <= element.x + element.w + 2 * element.a &&
-		cursor.y >= element.y &&
-		cursor.y < element.y + element.a
+		cursor.x > element.x + element.w &&
+		cursor.x <= element.x + element.w + element.a &&
+		cursor.y >= element.y -element.a &&
+		cursor.y < element.y
 	) {
 		position = 'tr';
 	} else if (
-		cursor.x >= element.x &&
-		cursor.x < element.x + element.a &&
-		cursor.y > element.y + element.h + element.a &&
-		cursor.y <= element.y + element.h + 2 * element.a
+		cursor.x >= element.x - element.a &&
+		cursor.x < element.x &&
+		cursor.y > element.y + element.h &&
+		cursor.y <= element.y + element.h + element.a
 	) {
 		position = 'bl';
 	} else if (
-		cursor.x > element.x + element.w + element.a &&
-		cursor.x <= element.x + element.w + 2 * element.a &&
-		cursor.y > element.y + element.h + element.a &&
-		cursor.y <= element.y + element.h + 2 * element.a
+		cursor.x > element.x + element.w &&
+		cursor.x <= element.x + element.w + element.a &&
+		cursor.y > element.y + element.h &&
+		cursor.y <= element.y + element.h + element.a
 	) {
 		position = 'br';
 	} else if (
-		cursor.x >= element.x + element.a &&
-		cursor.x <= element.x + element.w + element.a &&
-		cursor.y >= element.y &&
-		cursor.y < element.y + element.a
+		cursor.x >= element.x &&
+		cursor.x <= element.x + element.w &&
+		cursor.y >= element.y - element.a &&
+		cursor.y < element.y
 	) {
 		position = 't';
 	} else if (
-		cursor.x >= element.x + element.a &&
-		cursor.x <= element.x + element.w + element.a &&
-		cursor.y > element.y + element.h + element.a &&
-		cursor.y <= element.y + element.h + 2 * element.a
+		cursor.x >= element.x &&
+		cursor.x <= element.x + element.w &&
+		cursor.y > element.y + element.h &&
+		cursor.y <= element.y + element.h + element.a
 	) {
 		position = 'b';
 	} else if (
-		cursor.x >= element.x &&
-		cursor.x < element.x + element.a &&
-		cursor.y >= element.y + element.a &&
-		cursor.y <= element.y + element.h + 2 * element.a
+		cursor.x >= element.x - element.a &&
+		cursor.x < element.x &&
+		cursor.y >= element.y &&
+		cursor.y <= element.y + element.h + element.a
 	) {
 		position = 'l';
 	} else if (
-		cursor.x > element.x + element.w + element.a &&
-		cursor.x <= element.x + element.w + 2 * element.a &&
-		cursor.y >= element.y + element.a &&
-		cursor.y <= element.y + element.h + 2 * element.a
+		cursor.x > element.x + element.w &&
+		cursor.x <= element.x + element.w + element.a &&
+		cursor.y >= element.y &&
+		cursor.y <= element.y + element.h + element.a
 	) {
 		position = 'r';
 	} else if (
 		inTriangle(
 			cursor,
-			{ x: element.x + element.a, y: element.y + element.a },
-			{ x: element.x + element.a + element.w, y: element.y + element.a },
-			{ x: element.x + element.a + element.w / 2, y: element.y + element.a + element.h / 2 }
+			{ x: element.x, y: element.y },
+			{ x: element.x + element.w, y: element.y },
+			{ x: element.x + element.w / 2, y: element.y+ element.h / 2 }
 		)
 	) {
 		position = 'mt';
 	} else if (
 		inTriangle(
 			cursor,
-			{ x: element.x + element.a + element.w, y: element.y + element.a },
-			{ x: element.x + element.a + element.w, y: element.y + element.h + element.a },
-			{ x: element.x + element.a + element.w / 2, y: element.y + element.a + element.h / 2 }
+			{ x: element.x + element.w, y: element.y },
+			{ x: element.x + element.w, y: element.y + element.h },
+			{ x: element.x + element.w / 2, y: element.y + element.h / 2 }
 		)
 	) {
 		position = 'mr';
 	} else if (
 		inTriangle(
 			cursor,
-			{ x: element.x + element.a, y: element.y + element.a + element.h },
-			{ x: element.x + element.a + element.w, y: element.y + element.h + element.a },
-			{ x: element.x + element.a + element.w / 2, y: element.y + element.a + element.h / 2 }
+			{ x: element.x, y: element.y + element.h },
+			{ x: element.x + element.w, y: element.y + element.h },
+			{ x: element.x + element.w / 2, y: element.y + element.h / 2 }
 		)
 	) {
 		position = 'mb';
 	} else if (
 		inTriangle(
 			cursor,
-			{ x: element.x + element.a, y: element.y + element.a },
-			{ x: element.x + element.a, y: element.y + element.h + element.a },
-			{ x: element.x + element.a + element.w / 2, y: element.y + element.a + element.h / 2 }
+			{ x: element.x, y: element.y },
+			{ x: element.x, y: element.y + element.h },
+			{ x: element.x + element.w / 2, y: element.y + element.h / 2 }
 		)
 	) {
 		position = 'ml';
 	}
-
 	return position;
 }
 
