@@ -6,7 +6,8 @@
 		type Element,
 		type Cursor,
 		kite,
-		kiteFlip
+		kiteFlip,
+		touchPoint
 	} from './utils.js';
 	type Mode = 'random' | 'kite' | 'kite-flip';
 
@@ -39,7 +40,11 @@
 	};
 
 	function handleMove(e: PointerEvent) {
+		console.log(element.a)
 		updateCursorPosition(e);
+		if (!touchPoint(element, cursor)) {
+			return
+		}
 		if (dodge && !transitioning) {
 			switch (mode) {
 				case 'random':
