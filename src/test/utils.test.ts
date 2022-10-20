@@ -225,4 +225,27 @@ describe("Utils", () => {
     c = { x: 0, y: 2 };
     expect(triangleArea(a, b, c)).toEqual(2);
   });
+
+  test('bugTest', () => {
+    let element: Element = {
+      "a": 20,
+      "baseX": 8,
+      "baseY": 29,
+      "x": 0,
+      "y": 40,
+      "w": 647,
+      "h": 21
+    }
+    let box: Box = {
+      "up": 0,
+      "right": 100,
+      "down": 100,
+      "left": 0
+    }
+    let cursor: Cursor = {
+      "x": 0,
+      "y": 21
+  }
+    expect(kiteFlip(box, element, cursor)).toEqual({x: 0, y: 41})
+  })
 });
