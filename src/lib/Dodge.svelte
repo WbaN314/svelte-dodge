@@ -5,12 +5,13 @@
 		type Box,
 		type Element,
 		type Cursor,
+		type Point,
 		kite,
 		kiteFlip,
 		touchPoint
 	} from './utils.js';
 	import { createEventDispatcher } from 'svelte';
-	type Mode = 'random' | 'kite' | 'kite-flip';
+	type Mode = 'random' | 'kite' | 'kite-flip' | 'custom';
 
 	export let mode: Mode = 'kite-flip';
 	export let dodge = true;
@@ -19,6 +20,7 @@
 	export let moveDistance = 0;
 	export let duration = 0;
 	export let rate = 0;
+	export let customMovement: (Box, Element, Cursor) => Point
 
 	let transitioning = false;
 
@@ -60,6 +62,8 @@
 					break;
 				case 'kite-flip':
 					element = { ...element, ...kiteFlip(box, element, cursor) };
+				case 'custom':
+					element = { ...element, ...customMovement(box, element, cursor) };
 			}
 		}
 	}
