@@ -67,7 +67,7 @@
 	const limitedHandleMove = rateLimit(handleMove, rate);
 </script>
 
-<svelte:body on:pointermove={(e) => limitedHandleMove(e)} />
+<svelte:window on:pointermove={(e) => limitedHandleMove(e)} />
 
 <div
 	bind:clientHeight={elementH}
