@@ -64,8 +64,10 @@
 					break;
 				case 'kite-flip':
 					element = { ...element, ...kiteFlip(box, element, cursor) };
+					break;
 				case 'custom':
 					element = { ...element, ...customMovement(box, element, cursor) };
+					break;
 			}
 		}
 	}
