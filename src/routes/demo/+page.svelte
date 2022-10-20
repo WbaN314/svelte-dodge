@@ -6,7 +6,7 @@
 	let warning = false;
 	let login = false;
 
-	let timeout;
+	let timeout: NodeJS.Timeout;
 </script>
 
 <div class="outside">
@@ -21,7 +21,7 @@
 				<span class="warning">Enter your password</span>
 			{/if}
 		</div>
-		<input type="password" bind:value={password} />
+		<input type="password" bind:value={password} on:input={() => warning = false} />
 	</div>
 	<div>
 		<Dodge
