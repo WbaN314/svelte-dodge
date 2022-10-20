@@ -22,7 +22,7 @@
 	export let moveDistance = 0;
 	export let duration = 0;
 	export let rate = 0;
-	export let customMovement: (Box, Element, Cursor) => Point
+	export let customMovement: (box: Box, element: Element, cursor: Cursor) => Point
 
 	let transitioning = false;
 
