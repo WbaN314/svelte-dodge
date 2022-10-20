@@ -9,21 +9,26 @@
 		kiteFlip,
 		touchPoint
 	} from './utils.js';
+	import { createEventDispatcher } from 'svelte';
 	type Mode = 'random' | 'kite' | 'kite-flip';
 
 	export let mode: Mode = 'kite-flip';
 	export let dodge = true;
 	export let box: Box = { up: 0, right: 100, down: 100, left: 0 };
 	export let activationDistance = 20;
+	export let moveDistance = 0;
 	export let duration = 0;
 	export let rate = 0;
 
 	let transitioning = false;
 
+	const dispatch = createEventDispatcher();
+
 	let element: Element;
 	let elementW: number;
 	let elementH: number;
 	$: element = {
+		m: moveDistance,
 		a: activationDistance,
 		baseX: elementBind?.getBoundingClientRect().x,
 		baseY: elementBind?.getBoundingClientRect().y,
@@ -42,9 +47,10 @@
 	function handleMove(e: PointerEvent) {
 		updateCursorPosition(e);
 		if (!touchPoint(element, cursor)) {
-			return
+			return;
 		}
 		if (dodge && !transitioning) {
+			dispatch('move');
 			switch (mode) {
 				case 'random':
 					element = { ...element, ...randomMove(box, element, cursor) };
