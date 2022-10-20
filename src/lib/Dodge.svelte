@@ -1,15 +1,17 @@
 <script lang="ts">
 	import {
 		randomMove,
-		rateLimit,
 		type Box,
 		type Element,
 		type Cursor,
 		type Point,
 		kite,
 		kiteFlip,
-		touchPoint
-	} from './utils.js';
+	} from './movement.js';
+	import {
+		touchPoint,
+		rateLimit
+	} from './helpers.js';
 	import { createEventDispatcher } from 'svelte';
 	type Mode = 'random' | 'kite' | 'kite-flip' | 'custom';
 
