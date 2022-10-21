@@ -51,6 +51,10 @@
 		y: 0
 	};
 
+	$: if(dodge === false) {
+		element = {...element, x: box.left, y: box.up};
+	}
+
 	function handleMove(e: PointerEvent) {
 		updateCursorPosition(e);
 		if (!touchPoint(element, cursor)) {
