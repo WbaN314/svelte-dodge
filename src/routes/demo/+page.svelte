@@ -1,8 +1,8 @@
 <script lang="ts">
 	import Dodge from '$lib/Dodge.svelte';
 
-	let username: String;
-	let password: String;
+	let username: String = "";
+	let password: String = "";
 	let warning = false;
 	let login = false;
 
@@ -25,6 +25,7 @@
 	</div>
 	<div>
 		<Dodge
+			box = {{up: 0, left: 0, right: 600, down: 0}}
 			dodge={!(username?.length > 0 && password?.length > 0)}
 			on:move={() => {
 				clearTimeout(timeout);

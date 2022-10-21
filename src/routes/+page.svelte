@@ -6,9 +6,9 @@
 	let debug = true;
 	let box: Box = { up: 100, right: 100, down: 100, left: 100 };
 	let activationDistance = 20;
-	let duration = 0;
-	let rate = 0;
-	let moveDistance = 0;
+	let duration = 0.3;
+	let rate = 0.1;
+	let moveDistance = 100;
 
 	let width = 100;
 	let height = 100;

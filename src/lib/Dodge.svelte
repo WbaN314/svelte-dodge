@@ -6,12 +6,9 @@
 		type Cursor,
 		type Point,
 		kite,
-		kiteFlip,
+		kiteFlip
 	} from './movement.js';
-	import {
-		touchPoint,
-		rateLimit
-	} from './helpers.js';
+	import { touchPoint, rateLimit } from './helpers.js';
 	import { createEventDispatcher } from 'svelte';
 	type Mode = 'random' | 'kite' | 'kite-flip' | 'custom';
 
@@ -22,7 +19,13 @@
 	export let moveDistance = 100;
 	export let duration = 0.3;
 	export let rate = 0.1;
-	export let customMovement: (box: Box, element: Element, cursor: Cursor) => Point = (box: Box, element: Element, cursor: Cursor) => {return {x:0, y:0}};
+	export let customMovement: (box: Box, element: Element, cursor: Cursor) => Point = (
+		box: Box,
+		element: Element,
+		cursor: Cursor
+	) => {
+		return { x: 0, y: 0 };
+	};
 
 	let transitioning = false;
 
@@ -91,7 +94,7 @@
 	on:transitionstart={() => (transitioning = true)}
 	style={`
 	transform: translate(${element.x - box.left}px, ${element.y - box.up}px);
-		${duration > 0 ? `transition: ${duration}s` : ''}
+	${duration > 0 ? `transition: ${duration}s` : ''}
 	`}
 >
 	<slot />
