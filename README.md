@@ -2,6 +2,8 @@
 
 Make components dodge the pointer.
 
+<img src="./gif/demo.gif" alt="Demo Gif" height="190">
+
 ## About
 
 - Written in Svelte with Typescript
