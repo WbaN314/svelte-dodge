@@ -17,8 +17,10 @@
 	<div>
 		<div>
 			Password:
-			{#if warning}
-				<span class={`warning ${warning >= 2 ? 'shakeY' : ''}`}>Enter your password</span>
+			{#if warning > 0}
+				{#key warning}
+					<span class={`warning ${warning >= 2 ? 'shakeY' : ''}`}>Enter your password</span>
+				{/key}
 			{/if}
 		</div>
 		<input type="password" bind:value={password} on:input={() => (warning = 0)} />
@@ -33,11 +35,6 @@
 				timeout = setTimeout(() => {
 					warning = 0;
 				}, 5000);
-			}}
-			on:transitionend={() => {
-				if (warning >= 2) {
-					warning = 1;
-				}
 			}}
 		>
 			<button
@@ -75,24 +72,30 @@
 	}
 
 	@keyframes shakeY {
-		from,
-		to {
-			transform: translate3d(0, 0, 0);
+		from {
+			transform: scale3d(1, 1, 1);
 		}
 
 		10%,
+		20% {
+			transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+		}
+
 		30%,
 		50%,
 		70%,
 		90% {
-			transform: translate3d(0, -10px, 0);
+			transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
 		}
 
-		20%,
 		40%,
 		60%,
 		80% {
-			transform: translate3d(0, 10px, 0);
+			transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+		}
+
+		to {
+			transform: scale3d(1, 1, 1);
 		}
 	}
 
