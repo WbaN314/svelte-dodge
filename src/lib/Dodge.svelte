@@ -93,6 +93,7 @@
 	on:transitionend={() => (transitioning = false)}
 	on:transitionstart={() => (transitioning = true)}
 	style={`
+	display: inline-block;
 	transform: translate(${element.x - box.left}px, ${element.y - box.up}px);
 	${duration > 0 ? `transition: ${duration}s` : ''}
 	`}

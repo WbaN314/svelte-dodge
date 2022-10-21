@@ -25,7 +25,7 @@
 	</div>
 	<div>
 		<Dodge
-			box = {{up: 0, left: 0, right: 600, down: 0}}
+			box = {{up: 0, left: 0, right: 600, down: 500}}
 			dodge={!(username?.length > 0 && password?.length > 0)}
 			on:move={() => {
 				clearTimeout(timeout);
