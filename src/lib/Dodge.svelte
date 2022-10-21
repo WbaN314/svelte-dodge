@@ -12,13 +12,8 @@
 	import { createEventDispatcher } from 'svelte';
 	type Mode = 'random' | 'kite' | 'kite-flip' | 'custom';
 
-	export let mode: Mode = 'kite-flip';
-	export let dodge = true;
-	export let box: Box = { up: 0, right: 400, down: 0, left: 0 };
 	export let activationDistance = 20;
-	export let moveDistance = 100;
-	export let duration = 0.3;
-	export let rate = 0.1;
+	export let box: Box = { up: 0, right: 400, down: 0, left: 0 };
 	export let customMovement: (box: Box, element: Element, cursor: Cursor) => Point = (
 		box: Box,
 		element: Element,
@@ -26,6 +21,11 @@
 	) => {
 		return { x: 0, y: 0 };
 	};
+	export let dodge = true;
+	export let duration = 0.3;
+	export let mode: Mode = 'kite-flip';
+	export let moveDistance = 100;
+	export let rate = 0.1;
 
 	let transitioning = false;
 
@@ -51,8 +51,8 @@
 		y: 0
 	};
 
-	$: if(dodge === false) {
-		element = {...element, x: box.left, y: box.up};
+	$: if (dodge === false) {
+		element = { ...element, x: box.left, y: box.up };
 	}
 
 	function handleMove(e: PointerEvent) {
@@ -96,11 +96,11 @@
 	bind:this={elementBind}
 	on:transitionend={() => {
 		transitioning = false;
-		dispatch('transitionend')
-		}}
+		dispatch('transitionend');
+	}}
 	on:transitionstart={() => {
 		transitioning = true;
-		dispatch('transitionstart')
+		dispatch('transitionstart');
 	}}
 	style={`
 	display: inline-block;
