@@ -41,7 +41,7 @@ npm i -D svelte-dodge
 |box|right 400, rest 0|Size of possible movement area (additional to element size) in px in the directions up, down, left and right.|
 |customMovement|...|Supply a custom movement function. Set mode to 'custom' to use.|
 |dodge|true|Toggle the movement.|
-|duration|0.3|Transition duration in s when movement is triggered. If 0 no transition is used.|
+|duration|0.3|Transition duration in s when movement is triggered. If set to 0 no transition is used.|
 |mode|'kite-flip'|See movement.|
 |moveDistance|100|Additional movement in the desired direction when activated.|
 |rate|0.1|Update rate on cursor position and movement trigger detection in ms. If set to 0 it uses the native browser rate.|
