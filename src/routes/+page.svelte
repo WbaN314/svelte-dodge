@@ -18,7 +18,6 @@
 
 <div class="container">
 	<div class="controls">
-
 		<h1>Box</h1>
 
 		<h3>Mode</h3>
@@ -66,16 +65,22 @@
 	</div>
 
 	{#key rerender}
-	<div class="cell">
-		<div class="debug"
-		 style={`
+		<div class="cell">
+			<div
+				class="debug"
+				style={`
 		 padding: ${box.up}px ${box.right}px ${box.down}px ${box.left}px
-		 `}>
-			<Dodge {debug} {dodge} {mode} {box} {activationDistance} {rate} {duration} {moveDistance}>
-				<div class="test" style:width={`${width}px`} style:height={`${height}px`}/>
-			</Dodge>
+		 `}
+			>
+				<Dodge {debug} {dodge} {mode} {box} {activationDistance} {rate} {duration} {moveDistance}
+				on:move={() => console.log('move')}
+				on:transitionend={() => console.log('transitionend')}
+				on:transitionstart={() => console.log('transitionstart')}
+				>
+					<div class="test" style:width={`${width}px`} style:height={`${height}px`} />
+				</Dodge>
+			</div>
 		</div>
-	</div>
 	{/key}
 </div>
 
@@ -88,7 +93,7 @@
 	}
 
 	.debug {
-		background-color: rgb(255,0,0,0.2)
+		background-color: rgb(255, 0, 0, 0.2);
 	}
 
 	.controls {
