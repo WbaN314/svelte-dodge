@@ -94,8 +94,14 @@
 	bind:clientHeight={elementH}
 	bind:clientWidth={elementW}
 	bind:this={elementBind}
-	on:transitionend={() => (transitioning = false)}
-	on:transitionstart={() => (transitioning = true)}
+	on:transitionend={() => {
+		transitioning = false;
+		dispatch('transitionend')
+		}}
+	on:transitionstart={() => {
+		transitioning = true;
+		dispatch('transitionstart')
+	}}
 	style={`
 	display: inline-block;
 	transform: translate(${element.x - box.left}px, ${element.y - box.up}px);
