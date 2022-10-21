@@ -8,6 +8,7 @@
 	let activationDistance = 20;
 	let duration = 0;
 	let rate = 0;
+	let moveDistance = 0;
 
 	let width = 100;
 	let height = 100;
@@ -46,6 +47,9 @@
 		<h3>Activation Distance</h3>
 		<input type="number" bind:value={activationDistance} />
 
+		<h3>Move Distance</h3>
+		<input type="number" bind:value={moveDistance} />
+
 		<h3>Duration</h3>
 		<input type="number" bind:value={duration} />
 
@@ -67,7 +71,7 @@
 		 style={`
 		 padding: ${box.up}px ${box.right}px ${box.down}px ${box.left}px
 		 `}>
-			<Dodge {debug} {dodge} {mode} {box} {activationDistance} {rate} {duration}>
+			<Dodge {debug} {dodge} {mode} {box} {activationDistance} {rate} {duration} {moveDistance}>
 				<div class="test" style:width={`${width}px`} style:height={`${height}px`}/>
 			</Dodge>
 		</div>

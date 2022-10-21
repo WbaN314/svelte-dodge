@@ -17,11 +17,11 @@
 
 	export let mode: Mode = 'kite-flip';
 	export let dodge = true;
-	export let box: Box = { up: 0, right: 100, down: 100, left: 0 };
+	export let box: Box = { up: 0, right: 400, down: 0, left: 0 };
 	export let activationDistance = 20;
-	export let moveDistance = 0;
-	export let duration = 0;
-	export let rate = 0;
+	export let moveDistance = 100;
+	export let duration = 0.3;
+	export let rate = 0.1;
 	export let customMovement: (box: Box, element: Element, cursor: Cursor) => Point = (box: Box, element: Element, cursor: Cursor) => {return {x:0, y:0}};
 
 	let transitioning = false;
