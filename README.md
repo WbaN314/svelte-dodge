@@ -13,6 +13,10 @@ Make components dodge the pointer.
 - Multiple movement modes
 - Supply custom movement functions using available helpers
 
+## Demo
+
+https://wban314.github.io/svelte-dodge
+
 ## Installation
 
 ```
