@@ -13,6 +13,10 @@ Make components dodge the pointer.
 - Multiple movement modes
 - Supply custom movement functions using available helpers
 
+## Demo
+
+https://wban314.github.io/svelte-dodge
+
 ## Installation
 
 ```
@@ -60,7 +64,7 @@ Movement is triggered whenever the cursor moves inside the activation area. It i
 
 | Value |Description|
 |-----|--------------|
-|'custom'|Use the custom prop to supply a custom movement function. It takes box, element and cursor and should output new x,y coordinates for the element.|
+|'custom'|Use the customMovement prop to supply a custom movement function. It takes box, element and cursor and should output new x,y coordinates for the element.|
 |'kite'|Move away from cursor. When edge of area is reached flip to other side of area.|
 |'kite-flip'|Move away from cursor. When edge of area is reached flip to other side of cursor.|
 |'random'|Move to random spot im movement area when triggered. Make sure the cursor is not inside element after moving.|
