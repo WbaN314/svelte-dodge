@@ -1,7 +1,8 @@
 import adapter from '@sveltejs/adapter-static';
 import preprocess from 'svelte-preprocess';
 
-const dev = "production" === "development";
+// const dev = process.env.npm_lifecycle_event === "dev";
+const prod = process.env.NODE_ENV === "production";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -16,7 +17,7 @@ const config = {
 			fallback: 'index.html'
 		}),
 		paths: {
-			base: dev ? "" : "/svelte-dodge"
+			base: prod ? "/svelte-dodge" : ""
 		}
 	},
 

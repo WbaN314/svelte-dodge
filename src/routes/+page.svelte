@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import Dodge from '$lib/Dodge.svelte';
 
 	let mode = 'kite-flip';
@@ -12,8 +13,6 @@
 
 	let width = 100;
 	let height = 100;
-
-	let rerender = false;
 </script>
 
 <div class="container">
@@ -64,24 +63,37 @@
 		<input bind:value={height} />
 	</div>
 
-	{#key rerender}
-		<div class="cell">
-			<div
-				class="debug"
-				style={`
+
+	<a class="demo" href={`${base}/demo`}>
+		<button>
+			Login Demo
+		</button>
+	</a>
+
+	<div class="cell">
+		<div
+			class="debug"
+			style={`
 		 padding: ${box.up}px ${box.right}px ${box.down}px ${box.left}px
 		 `}
-			>
-				<Dodge {debug} {dodge} {mode} {box} {activationDistance} {rate} {duration} {moveDistance}
+		>
+			<Dodge
+				{debug}
+				{dodge}
+				{mode}
+				{box}
+				{activationDistance}
+				{rate}
+				{duration}
+				{moveDistance}
 				on:move={() => console.log('move')}
 				on:transitionend={() => console.log('transitionend')}
 				on:transitionstart={() => console.log('transitionstart')}
-				>
-					<div class="test" style:width={`${width}px`} style:height={`${height}px`} />
-				</Dodge>
-			</div>
+			>
+				<div class="test" style:width={`${width}px`} style:height={`${height}px`} />
+			</Dodge>
 		</div>
-	{/key}
+	</div>
 </div>
 
 <style>
@@ -115,6 +127,12 @@
 		align-items: stretch;
 		justify-items: stretch;
 		grid-template-columns: auto 1fr;
+	}
+
+	.demo {
+		position: absolute;
+		top: 8px;
+		right: 8px;
 	}
 
 	:global(body) {
